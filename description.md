@@ -58,5 +58,7 @@ The API can resolve the MCM with a POST request, i.e:
 With postman:
 ![Example for mcm](/images/mcmExample.PNG?raw=true "mcm example")
 
+The header has a new key called "result" with the operation result.
+
 ### References
 [How to run a Spring Boot .war](https://spring.io/guides/gs/spring-boot/)
