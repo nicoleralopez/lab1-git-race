@@ -76,10 +76,10 @@ Tests are made with JUnit.
 Tests to check if the API is working propery uses Mock functions. This kind of functions are used only to check if the method calls this functions. It can check the kind of the parameters, etc.
 
 ### New functionalities
-The API can resolve the MCM with a POST request, i.e:
+The API can resolve the gcd with a POST request, i.e:
 
 With postman:
-![Example for mcm](/images/mcmExample.PNG?raw=true "mcm example")
+![Example for gcd](/images/gcdExample.PNG?raw=true "gcd example")
 
 The header has a new key called "result" with the operation result.
 

@@ -39,16 +39,15 @@ public class HelloControllerUnitTest {
     }
 
     /**
-     * Check that the POST("/mcm") method works properly when
+     * Check that the POST("/gcd") method works properly when
      * the input is correct
      */
     @Test
-    public void testMcm() throws Exception {
-        LinkedMultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-        map.add("a", "10");
-        map.add("b", "15");
-        ResponseEntity view = controller.mcm(map);
-        assertThat(view.getHeaders().containsKey("result"), is(true));
-        assertThat(view.getHeaders().getFirst("result"), is("30"));
+    public void testgcd() throws Exception {
+        Gcd form = new Gcd();
+        form.setA(20);
+        form.setB(30);
+        int result = controller.gcd(form);
+        assertThat(result, is(10));
     }
 }

@@ -9,7 +9,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
 
 import java.lang.NumberFormatException;
 
@@ -39,28 +42,20 @@ public class HelloController {
      * 
      * @param form It must have two keys: "a":value1, "b":value2
      */
-    @PostMapping("/mcm")
-    public ResponseEntity<String> mcm(@RequestParam MultiValueMap<String, String> form) {
-        try {
-            int a = Integer.parseInt(form.getFirst("a"));
-            int b = Integer.parseInt(form.getFirst("b"));
-        
-            // http://ejerciciosresueltosprogramacion.blogspot.com/2017/01/funciones-minimo-comun-multiplo-de-dos.html
-            int m;
-            if (a > b)
-                m = a;
-            else
-                m = b;
-            while (m % a != 0 || m % b != 0)
-                m++;     
+    @PostMapping("/gcd")
+    @ResponseBody
+    public int gcd(@ModelAttribute Gcd form) {
+        int a = form.getA();
+        int b = form.getB();
 
-            // Return the result in the header
-            HttpHeaders responseHeaders = new HttpHeaders();
-            responseHeaders.add("result", Integer.toString(m));
-            return new ResponseEntity<>(responseHeaders, HttpStatus.OK);
-        } catch(NumberFormatException e) { // Check if parameters aren't a number
-            HttpHeaders responseHeaders = new HttpHeaders();
-            return new ResponseEntity<>(responseHeaders, HttpStatus.BAD_REQUEST);
+        // https://introcs.cs.princeton.edu/java/23recursion/Euclid.java.html
+        // Non-recursive Euclidean way
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
         }
+        // Result is stored in a
+        return a;
     }
 }
