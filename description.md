@@ -81,8 +81,6 @@ The API can resolve the gcd with a POST request, i.e:
 With postman:
 ![Example for gcd](/images/gcdExample.PNG?raw=true "gcd example")
 
-The header has a new key called "result" with the operation result.
-
 ### References
 [How to run a Spring Boot .war](https://spring.io/guides/gs/spring-boot/)
 
