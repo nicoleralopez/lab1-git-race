@@ -23,7 +23,7 @@ public class HelloController {
     public String welcome(Map<String, Object> model) {
         model.put("time", new Date());
         model.put("message", message);
-        return "wellcome";
+        return "welcome";
     }
 
     /**
@@ -35,7 +35,7 @@ public class HelloController {
     @GetMapping("/{name}")
     public String personalWelcome(Map<String, Object> model, @PathVariable String name) {
         model.put("name", "Hola " + name);
-        return "wellcome";
+        return "welcome";
     }
 
 }
