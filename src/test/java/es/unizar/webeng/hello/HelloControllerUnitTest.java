@@ -8,9 +8,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashMap;
+import org.springframework.util.LinkedMultiValueMap;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+
+import org.springframework.http.ResponseEntity;
+
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(HelloController.class)
@@ -22,7 +26,9 @@ public class HelloControllerUnitTest {
     @Autowired
     private HelloController controller;
 
-
+    /**
+     * Check that that the get("/") method works properly
+     */
     @Test
     public void testMessage() throws Exception {
         HashMap<String, Object> map = new HashMap<>();
@@ -30,5 +36,19 @@ public class HelloControllerUnitTest {
         assertThat(view, is("wellcome"));
         assertThat(map.containsKey("message"), is(true));
         assertThat(map.get("message"), is(message));
+    }
+
+    /**
+     * Check that the POST("/mcm") method works properly when
+     * the input is correct
+     */
+    @Test
+    public void testMcm() throws Exception {
+        LinkedMultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("a", "10");
+        map.add("b", "15");
+        ResponseEntity view = controller.mcm(map);
+        assertThat(view.getHeaders().containsKey("result"), is(true));
+        assertThat(view.getHeaders().getFirst("result"), is("30"));
     }
 }

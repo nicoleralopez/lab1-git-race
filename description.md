@@ -17,7 +17,30 @@ Once the .war is generated, it can be deployed using the command:
 
 ```
 $ cd lab1-git-race
-$ ./build/libs/lab1-git-race.war
+$ java -jar ./build/libs/lab1-git-race.war
+```
+
+In order to debug the tests, you can execute the following command to see the System.out.println("...")
+
+```
+$ cd lab1-git-race
+$ gradle check -i
+```
+
+### How to build and run the code
+
+In order to make this easy, let's build and run the application with only one line:
+
+```
+$ cd lab1-git-race
+$ ./gradlew build && java -jar ./build/libs/lab1-git-race.war
+```
+
+In the windows way:
+
+```
+$ cd lab1-git-race
+$ .\gradlew build && java -jar .\build\libs\lab1-git-race.war
 ```
 
 You can test the web application is running writing in your default web explorer:
@@ -25,7 +48,15 @@ http://localhost:8080
 
 ### Which are the technologies used in the code
 
-This is a Web Application built with Spring Boot
+This is a Web Application built with Spring Boot.
+Tests are made with JUnit.
+Tests to check if the API is working propery uses Mock functions. This kind of functions are used only to check if the method calls this functions. It can check the kind of the parameters, etc.
+
+### New functionalities
+The API can resolve the MCM with a POST request, i.e:
+
+With postman:
+![Example for mcm](/images/mcmExample.PNG?raw=true "mcm example")
 
 ### References
 [How to run a Spring Boot .war](https://spring.io/guides/gs/spring-boot/)
