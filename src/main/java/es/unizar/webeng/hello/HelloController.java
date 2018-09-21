@@ -18,7 +18,6 @@ public class HelloController {
      * This annotation is used to map the welcome function to a GET Request on path: "/"
      * @return a String composed with current date + a "Hello World" message
      */
-
     @GetMapping("/")
     public String welcome(Map<String, Object> model) {
         model.put("time", new Date());
