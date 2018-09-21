@@ -3,15 +3,33 @@
 ## Getting Started
 
 ### How to build de code
+Do the following steps to just build the project.
+```
+$ cd lab1-git-race
+$ ./gradlew assemble
+```
 
-Since the building tool used in this project is Gradle, the .war which contains the application can be generated using the following command:
-
+However if you want to execute tests too, then run:
 ```
 $ cd lab1-git-race
 $ ./gradlew build
 ```
 
+Both will produce a build folder.
+
+## War generating instructions
+If you want to generate a WAR file to deploy it in a server just execute the following commands:
+```
+$ cd lab1-git-race
+$ ./gradlew bootWar
+```
+
 ### How to test the code
+To run this project as a Spring Boot application type the following commands:
+```
+$ cd lab1-git-race
+$ ./gradlew bootRun
+```
 
 Once the .war is generated, it can be deployed using the command:
 
@@ -28,6 +46,11 @@ $ gradle check -i
 ```
 
 ### How to build and run the code
+To run the unit tests of the application type the following commands:
+```
+$ cd lab1-git-race
+$ ./gradlew test
+```
 
 In order to make this easy, let's build and run the application with only one line:
 
@@ -62,3 +85,4 @@ The header has a new key called "result" with the operation result.
 
 ### References
 [How to run a Spring Boot .war](https://spring.io/guides/gs/spring-boot/)
+
