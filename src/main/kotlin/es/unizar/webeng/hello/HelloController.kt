@@ -11,8 +11,7 @@ import java.util.Date;
 @Controller
 class HelloController {
     @Value("\${app.message}")
-    var message : String = "Hello World"
-        public set;
+    private var message : String = "Hello World"
 
     /**
      * 
