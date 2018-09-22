@@ -4,6 +4,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.http.HttpStatus;
 
@@ -53,14 +57,14 @@ class HelloController {
      */
     @PostMapping("/gcd")
     @ResponseBody
-    var gcd(@ModelAttribute Gcd form) : Integer {
+    fun gcd(@ModelAttribute form: Gcd) : Int {
         var a = form.getA();
         var b = form.getB();
 
         // https://introcs.cs.princeton.edu/java/23recursion/Euclid.java.html
         // Non-recursive Euclidean way
         while (b != 0) {
-            int temp = b;
+            var temp = b;
             b = a % b;
             a = temp;
         }

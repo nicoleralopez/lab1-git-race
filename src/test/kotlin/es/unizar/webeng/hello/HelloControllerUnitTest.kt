@@ -82,10 +82,10 @@ class HelloControllerUnitTest {
     @Test
     @Throws(Exception::class)
     fun `test Great Common Divisor`() {
-        Gcd form = new Gcd();
+        var form = Gcd();
         form.setA(20);
         form.setB(30);
         var result = controller.gcd(form);
-        assertThat(result, is(10));
+        assertThat(result, `is`(10));
     }
 }
