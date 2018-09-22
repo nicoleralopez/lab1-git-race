@@ -11,6 +11,10 @@ import java.util.HashMap;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import java.util.List;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Arrays;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(HelloController.class)
@@ -30,5 +34,18 @@ public class HelloControllerUnitTest {
         assertThat(view, is("wellcome"));
         assertThat(map.containsKey("message"), is(true));
         assertThat(map.get("message"), is(message));
+    }
+
+    @Test
+    public void primeTest() throws Exception {
+        List<Integer> testList = new LinkedList<>();
+        List<Integer> targetList = new LinkedList<>();
+        targetList.add(2);
+        targetList.add(3);
+        targetList.add(5);
+        targetList.add(7);
+        testList = controller.sieveOfEratosthenes(10);
+
+        assertThat(testList, is(targetList));
     }
 }
