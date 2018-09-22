@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.http.HttpStatus;
 
 import java.util.Date;
 
@@ -35,7 +36,12 @@ class HelloController {
     @GetMapping("/{name}")
     fun personalWelcome(@PathVariable name: String) : ModelAndView {
         var modelView = ModelAndView("welcome");
-        modelView.getModel().put("name", "Hola " + name);
+        if(name.matches(Regex("[A-Za-z ]+"))){
+            modelView.getModel().put("name", "Hola " + name);
+        }else{
+            modelView.setStatus(HttpStatus.BAD_REQUEST);
+            modelView.getModel().put("name", "Invalid request. No one can be named " + name);
+        }
         return modelView;
     }
 
