@@ -46,4 +46,26 @@ class HelloController {
         return modelView;
     }
 
+    /**
+     * Function example to check the post functionality
+     * 
+     * @param form It must have two keys: "a":value1, "b":value2
+     */
+    @PostMapping("/gcd")
+    @ResponseBody
+    var gcd(@ModelAttribute Gcd form) : Integer {
+        var a = form.getA();
+        var b = form.getB();
+
+        // https://introcs.cs.princeton.edu/java/23recursion/Euclid.java.html
+        // Non-recursive Euclidean way
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        // Result is stored in a
+        return a;
+    }
+
 }

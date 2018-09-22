@@ -74,4 +74,18 @@ class HelloControllerUnitTest {
         
         assertThat(view.getModel().get("name") as String, `is`("Invalid request. No one can be named " + personalMessage));
     }
+
+    /**
+     * Check that the POST("/gcd") method works properly when
+     * the input is correct
+     */
+    @Test
+    @Throws(Exception::class)
+    fun `test Great Common Divisor`() {
+        Gcd form = new Gcd();
+        form.setA(20);
+        form.setB(30);
+        var result = controller.gcd(form);
+        assertThat(result, is(10));
+    }
 }
