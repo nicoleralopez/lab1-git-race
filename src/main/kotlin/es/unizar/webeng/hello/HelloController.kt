@@ -20,10 +20,9 @@ class HelloController {
      */
     @GetMapping("/")
     fun welcome() : ModelAndView {
-        var modelView = ModelAndView();
+        var modelView = ModelAndView("welcome");
         modelView.getModel().put("time", Date());
         modelView.getModel().put("message", message);
-        modelView.setViewName("welcome");
         return modelView;
     }
 
@@ -35,9 +34,8 @@ class HelloController {
      */
     @GetMapping("/{name}")
     fun personalWelcome(@PathVariable name: String) : ModelAndView {
-        var modelView = ModelAndView();
+        var modelView = ModelAndView("welcome");
         modelView.getModel().put("name", "Hola " + name);
-        modelView.setViewName("welcome");
         return modelView;
     }
 
