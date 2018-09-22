@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.http.HttpStatus;
 
 import java.util.HashMap;
 
@@ -25,10 +26,43 @@ class HelloControllerUnitTest {
 
     @Test
     @Throws(Exception::class)
-    fun testMessage() {
+    fun `generic welcome`() {
         var view = controller.welcome();
         assertThat(view.getViewName(), `is`("welcome"));
+        
+        assertThat(view.getModel().containsKey("name"), `is`(false));
+        assertThat(view.getModel().containsKey("time"), `is`(true));
         assertThat(view.getModel().containsKey("message"), `is`(true));
+        
         assertThat(view.getModel().get("message") as String, `is`(message));
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun `personal welcome`() {
+        val personalMessage = "Web Engineering";
+        var view = controller.personalWelcome(personalMessage);
+        assertThat(view.getViewName(), `is`("welcome"));
+        
+        assertThat(view.getModel().containsKey("name"), `is`(true));
+        assertThat(view.getModel().containsKey("time"), `is`(false));
+        assertThat(view.getModel().containsKey("message"), `is`(false));
+
+        assertThat(view.getModel().get("name") as String, `is`("Hola " + personalMessage));
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun `invalid personal welcome`() {
+        val personalMessage = "__am";
+        var view = controller.personalWelcome(personalMessage);
+        assertThat(view.getStatus(), `is`(HttpStatus.BAD_REQUEST));
+        assertThat(view.getViewName(), `is`("welcome"));
+        
+        assertThat(view.getModel().containsKey("name"), `is`(true));
+        assertThat(view.getModel().containsKey("time"), `is`(false));
+        assertThat(view.getModel().containsKey("message"), `is`(false));
+        
+        assertThat(view.getModel().get("name") as String, `is`("Invalid request. No one can be named " + personalMessage));
     }
 }
