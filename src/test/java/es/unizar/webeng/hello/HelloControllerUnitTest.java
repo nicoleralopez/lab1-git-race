@@ -33,7 +33,7 @@ public class HelloControllerUnitTest {
     public void testMessage() throws Exception {
         HashMap<String, Object> map = new HashMap<>();
         String view = controller.welcome(map);
-        assertThat(view, is("wellcome"));
+        assertThat(view, is("welcome"));
         assertThat(map.containsKey("message"), is(true));
         assertThat(map.get("message"), is(message));
     }
