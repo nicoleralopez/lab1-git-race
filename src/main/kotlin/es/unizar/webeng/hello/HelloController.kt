@@ -4,14 +4,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
-import java.util.Map;
 
 @Controller
-public class HelloController {
-    @Value("${app.message:Hello World}")
-    private String message;
+class HelloController {
+    @Value("\${app.message}")
+    var message : String = "Hello World"
+        public set;
 
     /**
      * 
@@ -19,10 +20,12 @@ public class HelloController {
      * @return a String composed with current date + a "Hello World" message
      */
     @GetMapping("/")
-    public String welcome(Map<String, Object> model) {
-        model.put("time", new Date());
-        model.put("message", message);
-        return "welcome";
+    fun welcome() : ModelAndView {
+        var modelView = ModelAndView();
+        modelView.getModel().put("time", Date());
+        modelView.getModel().put("message", message);
+        modelView.setViewName("welcome");
+        return modelView;
     }
 
     /**
@@ -32,9 +35,11 @@ public class HelloController {
      * @return a String saying "Hello {name}"
      */
     @GetMapping("/{name}")
-    public String personalWelcome(Map<String, Object> model, @PathVariable String name) {
-        model.put("name", "Hola " + name);
-        return "welcome";
+    fun personalWelcome(@PathVariable name: String) : ModelAndView {
+        var modelView = ModelAndView();
+        modelView.getModel().put("name", "Hola " + name);
+        modelView.setViewName("welcome");
+        return modelView;
     }
 
 }
