@@ -8,4 +8,5 @@ User name | NIA | Travis-CI|Score
 [Abel Chils Trabanco](https://github.com/AbelChT) | 718997 | [![Build Status](https://travis-ci.com/AbelChT/lab1-git-race.svg)](https://travis-ci.com/AbelChT/lab1-git-race)
 [Carlos Marañes](https://github.com/carlosmn1997) | 717788 | [![Build Status](https://travis-ci.org/carlosmn1997/lab1-git-race.svg)](https://travis-ci.org/carlosmn1997/lab1-git-race)
 [Víctor Fernández Melic](https://github.com/Melic93) | 651943 | [![Build Status](https://travis-ci.org/Melic93/lab1-git-race.svg?branch=master)](https://travis-ci.com/Melic93/lab1-git-race)
+[Óscar Saboya Gómez](https://github.com/oscarsa) | 706430 | [![Build Status](https://travis-ci.org/oscarsa/lab1-git-race.svg)](https://travis-ci.com/oscarsa/lab1-git-race)
 your name | your nia | your Travis-ci status
