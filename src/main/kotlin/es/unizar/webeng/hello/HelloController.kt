@@ -30,8 +30,9 @@ class HelloController {
     /**
      * 
      * This annotation is used to map the personalWelcome function to a GET Request on path: "/{name}"
-     * @PathVariable annotation is used to extract a variable from the url
-     * @return a String saying "Hello {name}"
+     * @PathVariable annotation is used to extract a variable from the url.
+     * A name is considered valid *only* if it only contains letters (upper and lower) and spaces.
+     * @return a String saying "Hello {name}" if name is valid and an error message otherwise
      */
     @GetMapping("/{name}")
     fun personalWelcome(@PathVariable name: String) : ModelAndView {

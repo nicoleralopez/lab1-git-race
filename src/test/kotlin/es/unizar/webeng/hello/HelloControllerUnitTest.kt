@@ -24,6 +24,9 @@ class HelloControllerUnitTest {
     @Autowired
     private lateinit var controller : HelloController;
 
+    /*
+     * Test Generic welcome (MUST success)
+     */
     @Test
     @Throws(Exception::class)
     fun `generic welcome`() {
@@ -37,6 +40,9 @@ class HelloControllerUnitTest {
         assertThat(view.getModel().get("message") as String, `is`(message));
     }
 
+    /*
+     * Test Personal welcome with valid name (MUST success)
+     */
     @Test
     @Throws(Exception::class)
     fun `personal welcome`() {
@@ -51,6 +57,9 @@ class HelloControllerUnitTest {
         assertThat(view.getModel().get("name") as String, `is`("Hola " + personalMessage));
     }
 
+    /*
+     * Test Personal welcome with invalid name (MUST fail)
+     */
     @Test
     @Throws(Exception::class)
     fun `invalid personal welcome`() {
