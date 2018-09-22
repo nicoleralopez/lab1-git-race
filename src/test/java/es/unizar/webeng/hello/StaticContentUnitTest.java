@@ -29,11 +29,18 @@ public class StaticContentUnitTest {
 
     private MockMvc mockMvc;
 
+    /**
+     * These method is going to be called before each test
+     */
     @Before
     public void setup() {
+        // The method build now is a mock function
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
+    /**
+     * Check the calling GET("/")
+     */
     @Test
     public void testMessage() throws Exception {
         this.mockMvc.perform(get("/"))
@@ -41,4 +48,5 @@ public class StaticContentUnitTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("message", is(message)));
     }
+
 }
