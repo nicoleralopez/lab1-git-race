@@ -13,6 +13,7 @@ import java.util.HashMap;
 
 import org.hamcrest.CoreMatchers.`is`;
 import org.junit.Assert.assertThat;
+import org.junit.Assert.fail;
 
 @RunWith(SpringRunner::class)
 @WebMvcTest(HelloController::class)
@@ -31,13 +32,7 @@ class HelloControllerUnitTest {
     @Throws(Exception::class)
     fun `generic welcome`() {
         var view = controller.welcome();
-        assertThat(view.getViewName(), `is`("welcome"));
-        
-        assertThat(view.getModel().containsKey("name"), `is`(false));
-        assertThat(view.getModel().containsKey("time"), `is`(true));
-        assertThat(view.getModel().containsKey("message"), `is`(true));
-        
-        assertThat(view.getModel().get("message") as String, `is`(message));
+        assertThat(view.getMessage(), `is`(message));
     }
 
     /*
@@ -47,14 +42,12 @@ class HelloControllerUnitTest {
     @Throws(Exception::class)
     fun `personal welcome`() {
         val personalMessage = "Web Engineering";
-        var view = controller.personalWelcome(personalMessage);
-        assertThat(view.getViewName(), `is`("welcome"));
-        
-        assertThat(view.getModel().containsKey("name"), `is`(true));
-        assertThat(view.getModel().containsKey("time"), `is`(false));
-        assertThat(view.getModel().containsKey("message"), `is`(false));
-
-        assertThat(view.getModel().get("name") as String, `is`("Hola " + personalMessage));
+        try{
+            var view = controller.personalWelcome(personalMessage);
+            assertThat(view.getMessage(), `is`("Hola " + personalMessage));
+        }catch(ex: InvalidWelcomeMessageException){
+            fail("An exception is thrown when no exception MUST be thrown.");
+        }
     }
 
     /*
@@ -64,15 +57,12 @@ class HelloControllerUnitTest {
     @Throws(Exception::class)
     fun `invalid personal welcome`() {
         val personalMessage = "__am";
-        var view = controller.personalWelcome(personalMessage);
-        assertThat(view.getStatus(), `is`(HttpStatus.BAD_REQUEST));
-        assertThat(view.getViewName(), `is`("welcome"));
-        
-        assertThat(view.getModel().containsKey("name"), `is`(true));
-        assertThat(view.getModel().containsKey("time"), `is`(false));
-        assertThat(view.getModel().containsKey("message"), `is`(false));
-        
-        assertThat(view.getModel().get("name") as String, `is`("Invalid request. No one can be named " + personalMessage));
+        try{
+            controller.personalWelcome(personalMessage);
+            fail("No exception is thrown.");
+        }catch(ex: InvalidWelcomeMessageException){
+            assertThat(ex.message, `is`("Invalid request. No one can be named " + personalMessage));
+        }
     }
 
     /**
