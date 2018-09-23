@@ -24,16 +24,16 @@ public class IntegrationTest {
     private int port = 0;
 
     @Test
-    public void testHome() throws Exception {
+    public void testHome() {
         ResponseEntity<String> entity = new TestRestTemplate().getForEntity(
                 "http://localhost:" + this.port, String.class);
         assertEquals(HttpStatus.OK, entity.getStatusCode());
         assertTrue("Wrong body (title doesn't match):\n" + entity.getBody(), entity
-                .getBody().contains("\"message\":\"Hola"));
+                .getBody().contains("<title>Hello"));
     }
 
     @Test
-    public void testCss() throws Exception {
+    public void testCss() {
         ResponseEntity<String> entity = new TestRestTemplate().getForEntity(
                 "http://localhost:" + this.port
                         + "/webjars/bootstrap/3.3.5/css/bootstrap.min.css", String.class);
