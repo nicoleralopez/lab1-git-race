@@ -45,8 +45,7 @@ public class StaticContentUnitTest {
     public void testMessage() throws Exception {
         this.mockMvc.perform(get("/"))
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(model().attribute("message", is(message)));
+                .andExpect(status().isOk());
     }
 
 }

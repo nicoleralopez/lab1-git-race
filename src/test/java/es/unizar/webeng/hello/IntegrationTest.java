@@ -29,7 +29,7 @@ public class IntegrationTest {
                 "http://localhost:" + this.port, String.class);
         assertEquals(HttpStatus.OK, entity.getStatusCode());
         assertTrue("Wrong body (title doesn't match):\n" + entity.getBody(), entity
-                .getBody().contains("<title>Hello"));
+                .getBody().contains("\"message\":\"Hola"));
     }
 
     @Test
