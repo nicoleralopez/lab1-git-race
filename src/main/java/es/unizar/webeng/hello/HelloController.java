@@ -39,7 +39,7 @@ public class HelloController {
     }
 
     /**
-     * Function example to use 'gcd' {@link #gcd(Gcd)} to use it with a web GUI
+     * Function example to use 'gcd' {@link #gcd(Gcd)}  with a web GUI
      */
     @GetMapping("/gcdForm")
     public String gcdForm() {
