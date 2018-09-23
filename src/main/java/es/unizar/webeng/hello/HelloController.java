@@ -39,6 +39,29 @@ public class HelloController {
     }
 
     /**
+     * Function example to use 'gcd' {@link #gcd(Gcd)} to use it with a web GUI
+     */
+    @GetMapping("/gcdForm")
+    public String gcdForm() {
+        return "new-gcd";
+    }
+
+    /**
+     * Calculate the greatest common divisor with the form values and show the result
+     * to the user in a new webpage
+     * 
+     * @param form It must have two keys: "a":value1, "b":value2
+     * @return a String in a webpage with the 'gcd' of 'a' & 'b'
+     */
+    @PostMapping("/calculateGcd")
+    public String calculateGcd(Map<String, Object> model, @ModelAttribute Gcd form) {
+        model.put("firstNum",  form.getA() );
+        model.put("secondNum",  form.getB() );
+        model.put("result",  gcd(form) );
+        return "result";
+    }
+
+    /**
      * Function example to check the post functionality
      * 
      * @param form It must have two keys: "a":value1, "b":value2
