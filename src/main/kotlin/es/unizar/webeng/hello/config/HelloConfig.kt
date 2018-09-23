@@ -1,23 +1,26 @@
 package es.unizar.webeng.hello.config
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Description
-import org.thymeleaf.spring5.SpringTemplateEngine
 import org.springframework.context.support.ResourceBundleMessageSource
+import org.springframework.stereotype.Controller
 import org.springframework.web.context.ServletContextAware
+import org.thymeleaf.spring5.SpringTemplateEngine
+import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver
 import org.thymeleaf.spring5.view.ThymeleafViewResolver
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver
 import javax.servlet.ServletContext
 
 
 @Configuration
+@Controller
 class HelloConfig : ServletContextAware {
-    lateinit var servletContext: ServletContext
+    @Autowired
+    var context: ServletContext? = null
 
     override fun setServletContext(servletContext: ServletContext?) {
-        set
+        context = servletContext
     }
 
     
@@ -27,8 +30,8 @@ class HelloConfig : ServletContextAware {
      */
     @Bean
     @Description("Thymeleaf Template Resolver")
-    fun templateResolver() : ServletContextTemplateResolver {
-        val templateResolver = ServletContextTemplateResolver(servletContext)
+    fun templateResolver() : SpringResourceTemplateResolver {
+        val templateResolver = SpringResourceTemplateResolver()
         templateResolver.prefix = "/WEB-INF/views/"
         templateResolver.suffix = ".html"
         templateResolver.setTemplateMode("HTML5")

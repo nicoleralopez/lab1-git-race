@@ -2,13 +2,24 @@ package es.unizar.webeng.hello;
 
 import java.util.Date;
 
-class Message(msg: String) {
+class Message {
 
-    private var message: String = msg
-    private var time = Date();
+    private var message: String = ""
+    private var time = Date()
 
-    fun getMessage() : String = message;
-    fun getDate() : Date = time;
+    constructor(msg: String) {
+        this.message = msg
+    }
+
+    constructor() {
+        this.message = ""
+    }
+
+    fun getMessage() : String = message
+    fun getTime() : Date = time
+
+    fun setMessage(msg: String) {message = msg}
+    fun setTime(date: Date) {time = date}
 
 
 }
