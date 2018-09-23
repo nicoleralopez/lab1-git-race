@@ -1,23 +1,13 @@
-package es.unizar.webeng.hello;
+package es.unizar.webeng.hello
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.http.HttpStatus;
-
-import java.util.Date;
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.*
 
 @Controller
 class HelloController {
     @Value("\${app.message:Hello World}")
-    private var message : String = "Hello World";
+    private var message : String = "Hello World"
 
     /**
      * 
@@ -40,10 +30,10 @@ class HelloController {
     @GetMapping("/{name}")
     fun personalWelcome(@ModelAttribute msg: Message, @PathVariable name: String) : String {
         if(name.matches(Regex("[A-Za-z ]+"))){
-            msg.setMessage("Hola $name");
+            msg.setMessage("Hola $name")
             return "welcome"
         }else{
-            msg.setMessage("Invalid request. No one can be named " + name)
+            msg.setMessage("Invalid request. No one can be named $name")
             throw InvalidWelcomeMessageException(msg)
         }
     }
@@ -56,18 +46,18 @@ class HelloController {
     @PostMapping("/gcd")
     @ResponseBody
     fun gcd(@ModelAttribute form: Gcd) : Int {
-        var a = form.getA();
-        var b = form.getB();
+        var a = form.a
+        var b = form.b
 
         // https://introcs.cs.princeton.edu/java/23recursion/Euclid.java.html
         // Non-recursive Euclidean way
         while (b != 0) {
-            var temp = b;
-            b = a % b;
-            a = temp;
+            val temp = b
+            b = a % b
+            a = temp
         }
         // Result is stored in a
-        return a;
+        return a
     }
 
 }
