@@ -14,7 +14,7 @@ import org.springframework.http.HttpStatus;
 
 import java.util.Date;
 
-@RestController
+@Controller
 class HelloController {
     @Value("\${app.message:Hello World}")
     private var message : String = "Hello World";
@@ -25,8 +25,9 @@ class HelloController {
      * @return a String composed with current date + a "Hello World" message
      */
     @GetMapping("/")
-    fun welcome() : Message {
-        return Message(message);
+    fun welcome(@ModelAttribute msg: Message) : String {
+        msg.setMessage(message)
+        return "welcome"
     }
 
      /**
@@ -37,11 +38,13 @@ class HelloController {
      * @return a String saying "Hello {name}" if name is valid and an error message otherwise
      */
     @GetMapping("/{name}")
-    fun personalWelcome(@PathVariable name: String) : Message {
+    fun personalWelcome(@ModelAttribute msg: Message, @PathVariable name: String) : String {
         if(name.matches(Regex("[A-Za-z ]+"))){
-            return Message("Hola " + name);
+            msg.setMessage("Hola $name");
+            return "welcome"
         }else{
-            throw InvalidWelcomeMessageException("Invalid request. No one can be named " + name);
+            msg.setMessage("Invalid request. No one can be named " + name)
+            throw InvalidWelcomeMessageException(msg)
         }
     }
 
