@@ -9,4 +9,5 @@ User name | NIA | Travis-CI|Score
 [Carlos Marañes](https://github.com/carlosmn1997) | 717788 | [![Build Status](https://travis-ci.org/carlosmn1997/lab1-git-race.svg)](https://travis-ci.org/carlosmn1997/lab1-git-race)
 [Víctor Fernández Melic](https://github.com/Melic93) | 651943 | [![Build Status](https://travis-ci.org/Melic93/lab1-git-race.svg?branch=master)](https://travis-ci.com/Melic93/lab1-git-race)
 [Ángel Cañal Muniesa](https://github.com/lAngelP) | 716205 | [![Build Status](https://travis-ci.org/lAngelP/lab1-git-race.svg)](https://travis-ci.org/lAngelP/lab1-git-race) | :gift:
+[Alberto Mur Rodrigo](https://github.com/697589) | 697589 | [![Build Status](https://travis-ci.org/697589/lab1-git-race.svg)](https://travis-ci.org/697589/lab1-git-race)
 your name | your nia | your Travis-ci status
