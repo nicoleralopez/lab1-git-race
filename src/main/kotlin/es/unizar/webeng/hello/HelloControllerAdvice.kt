@@ -20,8 +20,8 @@ class HelloControllerAdvice {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	fun invalidWelcomeMessageHandler(ex: InvalidWelcomeMessageException) : ModelAndView{
 		val modelAndView = ModelAndView("welcome")
-		modelAndView.model["message"] = ex.mg
-		modelAndView.model["time"] = ex.mg.time
+		modelAndView.model["message"] = ex.msg
+		modelAndView.model["time"] = ex.msg.time
 		return modelAndView
 	}
 
@@ -35,8 +35,8 @@ class HelloControllerAdvice {
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	fun URINotFoundHandler(ex: URINotFoundException) : ModelAndView{
 		val modelAndView = ModelAndView("welcome")
-		modelAndView.model["message"] = ex.mg
-		modelAndView.model["time"] = ex.mg.time
+		modelAndView.model["message"] = ex.msg
+		modelAndView.model["time"] = ex.msg.time
 		return modelAndView
 	}
 }
