@@ -1,17 +1,17 @@
-package es.unizar.webeng.hello;
+package es.unizar.webeng.hello
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.boot.SpringApplication
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.builder.SpringApplicationBuilder
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 @SpringBootApplication
-class Application() : SpringBootServletInitializer() {
-    override fun configure(application: SpringApplicationBuilder) : SpringApplicationBuilder {
-        return application.sources(Application::class.java);
+class Application : SpringBootServletInitializer() {
+    override fun configure(application: SpringApplicationBuilder): SpringApplicationBuilder {
+        return application.sources(Application::class.java)
     }
 }
 
 fun main(args: Array<String>) {
-    SpringApplication.run(Application::class.java, *args);
+    SpringApplication.run(Application::class.java, *args)
 }
