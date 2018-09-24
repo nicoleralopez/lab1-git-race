@@ -15,10 +15,10 @@ import org.springframework.test.context.junit4.SpringRunner
 class HelloControllerUnitTest {
 
     @Value("\${app.message}")
-    private var message : String = "Hello World"
+    private var message: String = "Hello World"
 
     @Autowired
-    private lateinit var controller : HelloController
+    private lateinit var controller: HelloController
 
     /*
      * Test Generic welcome (MUST success)
@@ -40,11 +40,11 @@ class HelloControllerUnitTest {
     fun `personal welcome`() {
         val personalMessage = "Web Engineering"
         val message = Message()
-        try{
+        try {
             val view = controller.personalWelcome(message, personalMessage)
             assertThat(message.message, `is`("Hola $personalMessage"))
             assertThat(view, `is`("welcome"))
-        }catch(ex: InvalidWelcomeMessageException){
+        } catch (ex: InvalidWelcomeMessageException) {
             fail("An exception is thrown when no exception MUST be thrown.")
         }
     }
@@ -57,10 +57,10 @@ class HelloControllerUnitTest {
     fun `invalid personal welcome`() {
         val personalMessage = "__am"
         val message = Message()
-        try{
+        try {
             controller.personalWelcome(message, personalMessage)
             fail("No exception is thrown.")
-        }catch(ex: InvalidWelcomeMessageException){
+        } catch (ex: InvalidWelcomeMessageException) {
             assertThat(ex.message, `is`("Invalid request. No one can be named $personalMessage"))
         }
     }
@@ -72,9 +72,7 @@ class HelloControllerUnitTest {
     @Test
     @Throws(Exception::class)
     fun `test Great Common Divisor`() {
-        val form = Gcd()
-        form.a = 20
-        form.b = 30
+        val form = Gcd(a = 20, b = 30)
         val result = controller.gcd(form)
         assertThat(result, `is`(10))
     }
