@@ -18,7 +18,7 @@ class HelloController {
      */
     @GetMapping("/")
     fun welcome(@ModelAttribute msg: Message) : String {
-        msg.setMessage(message)
+        msg.message = message
         return "welcome"
     }
 
@@ -32,10 +32,10 @@ class HelloController {
     @GetMapping("/{name}")
     fun personalWelcome(@ModelAttribute msg: Message, @PathVariable name: String) : String {
         if(name.matches(Regex("[A-Za-z ]+"))){
-            msg.setMessage("Hola $name")
+            msg.message = "Hola $name"
             return "welcome"
         }else{
-            msg.setMessage("Invalid request. No one can be named $name")
+            msg.message = "Invalid request. No one can be named $name"
             throw InvalidWelcomeMessageException(msg)
         }
     }
@@ -51,9 +51,9 @@ class HelloController {
         val response = get("https://api.chucknorris.io/jokes/random")
         var statusCode = response.statusCode
         if( statusCode == 200){
-            msg.setMessage(response.jsonObject.getString("value"))
+            msg.message = response.jsonObject.getString("value")
         }else{
-            msg.setMessage("Error $statusCode NOT FOUND")
+            msg.message = "Error $statusCode NOT FOUND"
             throw URINotFoundException(msg)
         }
         return "welcome"

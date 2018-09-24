@@ -29,7 +29,7 @@ class HelloControllerUnitTest {
         val message = Message()
         val view = controller.welcome(message)
         assertThat(view, `is`("welcome"))
-        assertThat(message.getMessage(), `is`(this.message))
+        assertThat(message.message, `is`(this.message))
     }
 
     /*
@@ -42,7 +42,7 @@ class HelloControllerUnitTest {
         val message = Message()
         try{
             val view = controller.personalWelcome(message, personalMessage)
-            assertThat(message.getMessage(), `is`("Hola $personalMessage"))
+            assertThat(message.message, `is`("Hola $personalMessage"))
             assertThat(view, `is`("welcome"))
         }catch(ex: InvalidWelcomeMessageException){
             fail("An exception is thrown when no exception MUST be thrown.")

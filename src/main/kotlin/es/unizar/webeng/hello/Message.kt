@@ -3,9 +3,12 @@ package es.unizar.webeng.hello;
 import java.util.Date;
 
 class Message {
-
-    private var message: String = ""
-    private var time = Date()
+    /* 
+     * Properties declared in kotlin way. We don't use getters or setters as
+     * recomended in kotlin reference: https://kotlinlang.org/docs/reference/properties.html
+     */
+    var message: String = ""
+    var time = Date()
 
     constructor(msg: String) {
         this.message = msg
@@ -14,12 +17,4 @@ class Message {
     constructor() {
         this.message = ""
     }
-
-    fun getMessage() : String = message
-    fun getTime() : Date = time
-
-    fun setMessage(msg: String) {message = msg}
-    fun setTime(date: Date) {time = date}
-
-
 }

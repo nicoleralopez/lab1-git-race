@@ -21,7 +21,7 @@ class HelloControllerAdvice {
 	fun invalidWelcomeMessageHandler(ex: InvalidWelcomeMessageException) : ModelAndView{
 		val modelAndView = ModelAndView("welcome")
 		modelAndView.model["message"] = ex.getMsg()
-		modelAndView.model["time"] = ex.getMsg().getTime()
+		modelAndView.model["time"] = ex.getMsg().time
 		return modelAndView
 	}
 
@@ -36,7 +36,7 @@ class HelloControllerAdvice {
 	fun URINotFoundHandler(ex: URINotFoundException) : ModelAndView{
 		val modelAndView = ModelAndView("welcome")
 		modelAndView.model["message"] = ex.getMsg()
-		modelAndView.model["time"] = ex.getMsg().getTime()
+		modelAndView.model["time"] = ex.getMsg().time
 		return modelAndView
 	}
 }
