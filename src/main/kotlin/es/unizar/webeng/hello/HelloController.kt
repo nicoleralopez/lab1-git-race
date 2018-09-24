@@ -3,6 +3,7 @@ package es.unizar.webeng.hello
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
+import java.util.Random
 
 @Controller
 class HelloController {
@@ -60,4 +61,36 @@ class HelloController {
         return a
     }
 
+    /**
+     * Function returns random value between two integers
+     *
+     * @Param form It must have two keys: "a":value1, "b":value2
+     * @return Random integer between a and b: a<return<b
+     */
+    @PostMapping("/games/random")
+    @ResponseBody
+    fun randomInt(@ModelAttribute form: Gcd) : Int {
+        var a = form.a
+        var b = form.b
+        var random = Random()
+        return random.nextInt(b - a) + a
+    }
+
+    /**
+     * Funciton returns Heads or Trails game based on RNG
+     *
+     * @return returns string with result value [Heads or Trails]
+     */
+    @GetMapping("/games/HeadsTrails")
+    fun headsTrails(@ModelAttribute msg: Message) : String {
+        var random = Random()
+        var value = random.nextInt(2)
+        if (value == 0) {
+            msg.setMessage("Heads")
+            return "headsTrails"
+        } else {
+            msg.setMessage("Tails")
+            return "headsTrails"
+        }
+    }
 }
