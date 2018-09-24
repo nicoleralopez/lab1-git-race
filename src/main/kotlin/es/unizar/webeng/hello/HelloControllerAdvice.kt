@@ -20,8 +20,8 @@ class HelloControllerAdvice {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	fun invalidWelcomeMessageHandler(ex: InvalidWelcomeMessageException) : ModelAndView{
 		val modelAndView = ModelAndView("welcome")
-		modelAndView.model["message"] = ex.getMsg()
-		modelAndView.model["time"] = ex.getMsg().getTime()
+		modelAndView.model["message"] = ex.msg
+		modelAndView.model["time"] = ex.msg.time
 		return modelAndView
 	}
 }
