@@ -73,24 +73,16 @@ class HelloControllerUnitTest {
         }
     }
 
-    // /**
-    //  * Check that the POST("/gcd") method works properly when
-    //  * the input is correct
-    //  */
-    // @Test
-    // @Throws(Exception::class)
-    // fun `test Great Common Divisor`() {
-    //     val form = Gcd(a = 20, b = 30)
-    //     val result = controller.gcd(form)
-    //     assertThat(result, `is`(10))
-    // }
-
-    // @Test
-    // @Throws(Exception::class)
-    // fun `test add a movie`() {
-    //     val request = controller.add("1990", "Terminator")
-    //     // println(status)
-    //     assertThat(request.getStatusCode(), `is`(HttpStatus.OK))
-    // }
+    /**
+     * Check that the POST("/gcd") method works properly when
+     * the input is correct
+     */
+    @Test
+    @Throws(Exception::class)
+    fun `test Great Common Divisor`() {
+        val form = Gcd(a = 20, b = 30)
+        val result = controller.gcd(form)
+        assertThat(result, `is`(10))
+    }
 
 }

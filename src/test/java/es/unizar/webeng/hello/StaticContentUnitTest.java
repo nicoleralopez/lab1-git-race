@@ -51,37 +51,4 @@ public class StaticContentUnitTest {
                 .andExpect(status().isOk());
     }
 
-    // /**
-    //  * Checks the method adding a movie
-    //  */
-    // @Test
-    // public void addAMovie() throws Exception {
-    //     this.mockMvc.perform(post("/add")
-    //             .content("wlalala"))
-                
-    //             .andExpect(status().isOk());
-    // }
-
-
-
-    
-    // @Test
-    // @Throws(Exception::class)
-    // fun `test add a movie`() {
-    //     println("JAJA")
-    //     val request = controller.add("1990", "Terminator")
-    //     // println(status)
-    //     assertThat(request.getStatusCode(), `is`(HttpStatus.OK))
-    // }
-
-    // /**
-    //  * Check method get all movies
-    //  */
-    // @Test
-    // @Throws(Exception::class)
-    // fun `test get all movies`() {
-    //     val request = controller.findAll()
-    //     assertThat(request.get("1990"), `is`("Terminator"))
-    // }
-
 }
