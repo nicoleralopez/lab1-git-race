@@ -24,4 +24,19 @@ class HelloControllerAdvice {
 		modelAndView.model["time"] = ex.msg.time
 		return modelAndView
 	}
+
+	/*
+	 * Handles any URINotFoundException thrown by any controller method.
+	 * If any controller method throws that exception, this one is executed to return a message
+	 * 	with a NOT_FOUND (404) error code.
+	 */
+	@ResponseBody
+	@ExceptionHandler(URINotFoundException::class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	fun URINotFoundHandler(ex: URINotFoundException) : ModelAndView{
+		val modelAndView = ModelAndView("welcome")
+		modelAndView.model["message"] = ex.msg
+		modelAndView.model["time"] = ex.msg.time
+		return modelAndView
+	}
 }

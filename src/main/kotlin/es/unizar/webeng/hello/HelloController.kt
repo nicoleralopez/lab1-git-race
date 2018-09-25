@@ -3,6 +3,8 @@ package es.unizar.webeng.hello
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
+import khttp.get // Http library for kotlin
+import org.json.*
 import java.util.Random
 
 @Controller
@@ -16,7 +18,7 @@ class HelloController {
      * @return a String composed with current date + a "Hello World" message
      */
     @GetMapping("/")
-    fun welcome(@ModelAttribute msg: Message): String {
+    fun welcome(@ModelAttribute msg: Message) : String {
         msg.message = message
         return "welcome"
     }
@@ -37,6 +39,25 @@ class HelloController {
             msg.message = "Invalid request. No one can be named $name"
             throw InvalidWelcomeMessageException(msg)
         }
+    }
+
+    /**
+     * 
+     * This endpoint returns a random Chuck Norris joke if the api is available and error 404 (NOT FOUND)
+     * if it's not
+     * @return a String with a funny joke
+     */
+    @GetMapping("/joke")
+    fun joke(@ModelAttribute msg: Message) : String {
+        val response = get("https://api.chucknorris.io/jokes/random")
+        var statusCode = response.statusCode
+        if( statusCode == 200){
+            msg.message = response.jsonObject.getString("value")
+        }else{
+            msg.message = "Error $statusCode NOT FOUND"
+            throw URINotFoundException(msg)
+        }
+        return "welcome"
     }
 
     /**

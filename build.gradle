@@ -39,6 +39,7 @@ sourceSets {
 
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' } // Package repository for adding Git projects
 }
 
 dependencies {
@@ -52,6 +53,8 @@ dependencies {
 
     compile 'org.webjars:bootstrap:3.3.5'
     compile 'org.webjars:jquery:2.1.4'
+
+    implementation 'com.github.jkcclemens:khttp:0.1.0' // Http Repository for kotlin from github
 
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     providedRuntime 'org.apache.tomcat.embed:tomcat-embed-jasper'
