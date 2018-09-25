@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner
 
 import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.boot.test.mock.mockito.MockBean
-
+import org.springframework.http.HttpStatus
 
 
 @RunWith(SpringRunner::class)
@@ -73,15 +73,24 @@ class HelloControllerUnitTest {
         }
     }
 
-    /**
-     * Check that the POST("/gcd") method works properly when
-     * the input is correct
-     */
-    @Test
-    @Throws(Exception::class)
-    fun `test Great Common Divisor`() {
-        val form = Gcd(a = 20, b = 30)
-        val result = controller.gcd(form)
-        assertThat(result, `is`(10))
-    }
+    // /**
+    //  * Check that the POST("/gcd") method works properly when
+    //  * the input is correct
+    //  */
+    // @Test
+    // @Throws(Exception::class)
+    // fun `test Great Common Divisor`() {
+    //     val form = Gcd(a = 20, b = 30)
+    //     val result = controller.gcd(form)
+    //     assertThat(result, `is`(10))
+    // }
+
+    // @Test
+    // @Throws(Exception::class)
+    // fun `test add a movie`() {
+    //     val request = controller.add("1990", "Terminator")
+    //     // println(status)
+    //     assertThat(request.getStatusCode(), `is`(HttpStatus.OK))
+    // }
+
 }

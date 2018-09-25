@@ -9,6 +9,8 @@ import java.util.Random
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.redis.core.StringRedisTemplate
+import org.springframework.http.ResponseEntity
+import org.springframework.http.HttpStatus
 
 
 @Controller
@@ -16,27 +18,54 @@ class HelloController {
     @Value("\${app.message:Hello World}")
     private var message: String = "Hello World"
 
-    @Autowired
+    @Autowired // Database Persistance
     lateinit private var sharedData : StringRedisTemplate
 
-    // /**
-    //  *
-    //  * This annotation is used to map the welcome function to a GET Request on path: "/"
-    //  * @return a String composed with current date + a "Hello World" message
-    //  */
-    @GetMapping("/student")
-    fun student(@ModelAttribute msg: Message) : String {
-        sharedData.opsForValue().set("123", "1234");
-        msg.message = "OOOOOOOOOOOK"
-        return "welcome"
+
+    /**
+     * 
+     * This endpoint return all the movies in the database
+     * @return a Map<String,String> with all the movies in the database
+     */
+    @GetMapping("/values")
+    @ResponseBody
+    fun findAll() : Map<String, String> {
+        var map = HashMap<String, String>();
+        var keys = sharedData.keys("*");// you can use any specific pattern of key
+        // return sharedData.opsForValue().multiGet(keys);
+        for(key in keys){
+            var value = sharedData.opsForValue().get(key);
+            map.put(key, value)
+        }
+        return map 
     }
 
-    @GetMapping("/student2")
-    fun student2(@ModelAttribute msg: Message) : String {
-        var key = sharedData.opsForValue().get("123")
-        msg.message = key
-        return "welcome"
+    /**
+     * Add a movie
+     *
+     * @param key The key of the movie
+     * @param value Name of the movie
+     *
+     * @return Ok if everything goes ok
+     */
+    @PostMapping("/add")
+    fun add(@RequestParam key: String, @RequestParam value: String) : ResponseEntity<String> {
+        sharedData.opsForValue().set(key, value);
+        return ResponseEntity<String>(HttpStatus.OK);
     }
+
+    /**
+     * Delete a movie
+     *
+     * @param key The key of the movie
+     *
+     * @return Ok if everything goes ok
+     */
+    @PostMapping("/delete")
+    fun delete(@RequestParam key: String) : ResponseEntity<String>{
+        sharedData.delete(key);
+        return ResponseEntity<String>(HttpStatus.OK);
+    } 
 
     /**
      *
