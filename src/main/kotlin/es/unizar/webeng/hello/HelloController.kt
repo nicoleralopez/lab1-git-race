@@ -86,10 +86,10 @@ class HelloController {
         var random = Random()
         var value = random.nextInt(2)
         if (value == 0) {
-            msg.setMessage("Heads")
+            msg.message = "Heads"
             return "headsTrails"
         } else {
-            msg.setMessage("Tails")
+            msg.message = "Tails"
             return "headsTrails"
         }
     }
