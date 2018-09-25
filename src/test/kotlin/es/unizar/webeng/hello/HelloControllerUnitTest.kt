@@ -10,6 +10,11 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.test.context.junit4.SpringRunner
 
+import org.springframework.data.redis.core.StringRedisTemplate
+import org.springframework.boot.test.mock.mockito.MockBean
+
+
+
 @RunWith(SpringRunner::class)
 @WebMvcTest(HelloController::class)
 class HelloControllerUnitTest {
@@ -19,6 +24,9 @@ class HelloControllerUnitTest {
 
     @Autowired
     private lateinit var controller: HelloController
+
+    @MockBean // If not, it throws NoSuchBeanDefinitionException
+	private lateinit var stringRedisTemplate : StringRedisTemplate
 
     /*
      * Test Generic welcome (MUST success)

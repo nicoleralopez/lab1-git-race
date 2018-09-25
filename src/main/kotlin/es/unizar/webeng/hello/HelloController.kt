@@ -7,10 +7,36 @@ import khttp.get // Http library for kotlin
 import org.json.*
 import java.util.Random
 
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.redis.core.StringRedisTemplate
+
+
 @Controller
 class HelloController {
     @Value("\${app.message:Hello World}")
     private var message: String = "Hello World"
+
+    @Autowired
+    lateinit private var sharedData : StringRedisTemplate
+
+    // /**
+    //  *
+    //  * This annotation is used to map the welcome function to a GET Request on path: "/"
+    //  * @return a String composed with current date + a "Hello World" message
+    //  */
+    @GetMapping("/student")
+    fun student(@ModelAttribute msg: Message) : String {
+        sharedData.opsForValue().set("123", "1234");
+        msg.message = "OOOOOOOOOOOK"
+        return "welcome"
+    }
+
+    @GetMapping("/student2")
+    fun student2(@ModelAttribute msg: Message) : String {
+        var key = sharedData.opsForValue().get("123")
+        msg.message = key
+        return "welcome"
+    }
 
     /**
      *
@@ -114,4 +140,5 @@ class HelloController {
             return "headsTrails"
         }
     }
+
 }
