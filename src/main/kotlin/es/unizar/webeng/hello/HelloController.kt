@@ -36,7 +36,7 @@ class HelloController {
         // return sharedData.opsForValue().multiGet(keys);
         for(key in keys){
             var value = sharedData.opsForValue().get(key);
-            map.put(key, value)
+            if (value != null) map.put(key, value)
         }
         return map 
     }
@@ -51,8 +51,8 @@ class HelloController {
      */
     @PostMapping("/add")
     fun add(@RequestParam movie: MultiValueMap<String, String>) : ResponseEntity<String> {
-        var key = movie.getFirst("key")
-        var value = movie.getFirst("value")
+        var key = movie.getFirst("key")!!
+        var value = movie.getFirst("value")!!
         sharedData.opsForValue().set(key, value);
         return ResponseEntity<String>(HttpStatus.OK);
     }
