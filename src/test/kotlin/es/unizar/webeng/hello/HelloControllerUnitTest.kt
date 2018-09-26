@@ -10,6 +10,11 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.test.context.junit4.SpringRunner
 
+import org.springframework.data.redis.core.StringRedisTemplate
+import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.http.HttpStatus
+
+
 @RunWith(SpringRunner::class)
 @WebMvcTest(HelloController::class)
 class HelloControllerUnitTest {
@@ -20,14 +25,17 @@ class HelloControllerUnitTest {
     @Autowired
     private lateinit var controller: HelloController
 
+    @MockBean // If not, it throws NoSuchBeanDefinitionException
+	  private lateinit var stringRedisTemplate : StringRedisTemplate
+
     /*
      * Test Generic welcome (MUST success)
      */
     @Test
     @Throws(Exception::class)
     fun `generic welcome`() {
-        val message = Message()
-        val view = controller.welcome(message)
+        var message = Message()
+        var view = controller.welcome(message)
         assertThat(view, `is`("welcome"))
         assertThat(message.message, `is`(this.message))
     }

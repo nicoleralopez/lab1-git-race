@@ -7,10 +7,68 @@ import khttp.get // Http library for kotlin
 import org.json.*
 import java.util.Random
 
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.redis.core.StringRedisTemplate
+import org.springframework.http.ResponseEntity
+import org.springframework.http.HttpStatus
+import org.springframework.util.MultiValueMap;
+
+
 @Controller
 class HelloController {
     @Value("\${app.message:Hello World}")
     private var message: String = "Hello World"
+
+    @Autowired // Database Persistance
+    lateinit private var sharedData : StringRedisTemplate
+
+
+    /**
+     * 
+     * This endpoint return all the movies in the database
+     * @return a Map<String,String> with all the movies in the database
+     */
+    @GetMapping("/values")
+    @ResponseBody
+    fun findAll() : Map<String, String> {
+        var map = HashMap<String, String>();
+        var keys = sharedData.keys("*");// you can use any specific pattern of key
+        // return sharedData.opsForValue().multiGet(keys);
+        for(key in keys){
+            var value = sharedData.opsForValue().get(key);
+            if (value != null) map.put(key, value)
+        }
+        return map 
+    }
+
+    /**
+     * Add a movie
+     *
+     * @param key The key of the movie
+     * @param value Name of the movie
+     *
+     * @return Ok if everything goes ok
+     */
+    @PostMapping("/add")
+    fun add(@RequestParam movie: MultiValueMap<String, String>) : ResponseEntity<String> {
+        var key = movie.getFirst("key")!!
+        var value = movie.getFirst("value")!!
+        sharedData.opsForValue().set(key, value);
+        return ResponseEntity<String>(HttpStatus.OK);
+    }
+
+    /**
+     * Delete a movie
+     *
+     * @param key The key of the movie
+     *
+     * @return Ok if everything goes ok
+     */
+    @PostMapping("/delete")
+    fun delete(@RequestParam key: String) : ResponseEntity<String>{
+        sharedData.delete(key);
+        return ResponseEntity<String>(HttpStatus.OK);
+    } 
 
     /**
      *
@@ -147,4 +205,5 @@ class HelloController {
             return "headsTrails"
         }
     }
+
 }

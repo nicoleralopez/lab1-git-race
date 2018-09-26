@@ -7,5 +7,38 @@
 <kbd><span th:text="${message.time}"></span>&nbsp;<span class="glyphicon glyphicon-console"></span>&nbsp;<span th:text="${message.message}"></span></kbd>
 <br/>
 <script type="text/javascript" src="webjars/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="js/functions.js"></script>
+
 </body>
+<br/>
+<div class="container">
+      <div class="row">
+          <div class="col-md-3">
+              <form id="addForm">
+                  <div class="form-group">
+                      <label for="keyInput">Movie ID (key)</label>
+                      <input name="keyInput" id="keyInput" class="form-control"/>
+                  </div>
+                  <div class="form-group">
+                      <label for="valueInput">Movie Name (value)</label>
+                      <input name="valueInput" id="valueInput" class="form-control"/>
+                  </div>
+                  <button class="btn btn-default" id="addButton">Add</button>
+              </form>
+          </div>
+          <div class="col-md-8 col-md-offset-1">
+              <table class="table table-hover" id="mainTable">
+                  <thead>
+                      <tr>
+                          <th>Key</th>
+                          <th>Value</th>
+                          <th></th>
+                          <th></th>
+                      </tr>
+                  </thead>
+                  <tbody></tbody>
+              </table>
+          </div>
+      </div>
+  </div>
 </html> 
