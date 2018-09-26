@@ -80,12 +80,8 @@ class HelloControllerUnitTest {
     @Test
     @Throws(Exception::class)
     fun primeTest(){
-        var testList = mutableListOf<Int>()
-        var targetList = mutableListOf<Int>()
-        targetList.add(2)
-        targetList.add(3)
-        targetList.add(5)
-        targetList.add(7)
+        var testList: List<Int>
+        var targetList = mutableListOf(2, 3, 5, 7)
         testList = controller.sieveOfEratosthenes(10).toMutableList()
         
         assertThat(testList.joinToString(), `is`(targetList.joinToString()))
