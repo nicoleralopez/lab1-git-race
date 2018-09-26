@@ -160,7 +160,7 @@ class HelloController {
      *
      * @return returns string with result value [Heads or Trails]
      */
-    @GetMapping("/games/HeadsTrails")
+    @GetMapping("/games/headsTrails")
     fun headsTrails(@ModelAttribute msg: Message) : String {
         var random = Random()
         var value = random.nextInt(2)
