@@ -32,11 +32,6 @@ jar {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-// To wath de STDOUT
-// test {
-//     testLogging.showStandardStreams = true
-// }
-
 sourceSets {
     /* Needed because default kotlin source directory is src/main/java */
     main.kotlin.srcDirs += 'src/main/kotlin'
@@ -66,12 +61,8 @@ dependencies {
 
     testCompile 'org.springframework.boot:spring-boot-starter-test'
 
-    // Persistance
+    // Persistence
     compile 'org.springframework.boot:spring-boot-starter-data-redis'
-    compile 'org.springframework.boot:spring-boot-starter-data-redis'
-
-    compile 'org.springframework.data:spring-data-redis:2.0.3.RELEASE'
-    compile 'redis.clients:jedis'
 
 }
 

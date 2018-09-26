@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.http.ResponseEntity
 import org.springframework.http.HttpStatus
+import org.springframework.util.MultiValueMap;
 
 
 @Controller
@@ -49,7 +50,9 @@ class HelloController {
      * @return Ok if everything goes ok
      */
     @PostMapping("/add")
-    fun add(@RequestParam key: String, @RequestParam value: String) : ResponseEntity<String> {
+    fun add(@RequestParam movie: MultiValueMap<String, String>) : ResponseEntity<String> {
+        var key = movie.getFirst("key")
+        var value = movie.getFirst("value")
         sharedData.opsForValue().set(key, value);
         return ResponseEntity<String>(HttpStatus.OK);
     }

@@ -34,8 +34,8 @@ class HelloControllerUnitTest {
     @Test
     @Throws(Exception::class)
     fun `generic welcome`() {
-        val message = Message()
-        val view = controller.welcome(message)
+        var message = Message()
+        var view = controller.welcome(message)
         assertThat(view, `is`("welcome"))
         assertThat(message.message, `is`(this.message))
     }
