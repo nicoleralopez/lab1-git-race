@@ -54,6 +54,19 @@ You can test the web application is running writing in your default web browser:
 ```
 http://localhost:8080
 ```
+Before you run the code, you must inicialize REDIS
+
+### How to install DOCKER and run REDIS
+
+First of all, you must download docker from de official page: https://www.docker.com/
+
+When you are installing it, it will answer you if you want Linux or Windows containers, you must choose Linux ones.
+
+Once it is installed, you must run Redis with the following command:
+```
+$ cd lab1-git-race
+$ docker-compose -f redis.yml up
+```
 
 ### How to generate a WAR
 If you want to generate a WAR file to deploy it in a server just execute the following commands:
@@ -82,4 +95,5 @@ With postman:
 
 ## References
 [How to run a Spring Boot .war](https://spring.io/guides/gs/spring-boot/)
+[Save movies](http://michaelcgood.com/intro-redis-with-spring-boot/)
 
