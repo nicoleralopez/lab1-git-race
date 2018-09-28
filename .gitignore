@@ -13,6 +13,11 @@ gradle-app.setting
 .settings/
 .vscode/
 bin/
+src/main/resources/static/qr/img/*
+
+
+# exception to the rule
+!src/main/resources/static/qr/img/.gitkeep.txt 
 
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle/wrapper/gradle-wrapper.jar

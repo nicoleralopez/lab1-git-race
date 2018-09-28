@@ -13,6 +13,16 @@ import org.springframework.http.ResponseEntity
 import org.springframework.http.HttpStatus
 import org.springframework.util.MultiValueMap;
 
+// Libraries for QR Generation
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 
 @Controller
 class HelloController {
@@ -116,6 +126,29 @@ class HelloController {
             throw URINotFoundException(msg)
         }
         return "welcome"
+    }
+
+    /**
+     * 
+     * This endpoint returns a QR Code with a {phrase} encoded and saves it to static/qr/img folder
+     * @return a Qr object
+     */
+    @GetMapping("/qr/{phrase}")
+    fun qr(@ModelAttribute qr: Qr, @PathVariable phrase: String) : String {
+        
+        var hash : Int = phrase.hashCode()
+        
+        val qrwriter = QRCodeWriter()
+        val BitMatrix = qrwriter.encode("$phrase", BarcodeFormat.QR_CODE, 500, 500)
+
+        val path = FileSystems.getDefault().getPath("src/main/resources/static/qr/img/$hash.png")
+        MatrixToImageWriter.writeToPath(BitMatrix, "PNG", path)
+
+        qr.path = path.toString()
+        qr.phrase = phrase
+        qr.hash = phrase.hashCode()
+
+        return "qr"
     }
 
     /**

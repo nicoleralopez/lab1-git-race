@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<title>QR Generator</title>
+<link rel="stylesheet" type="text/css"
+      href="webjars/bootstrap/3.3.5/css/bootstrap.min.css"/>
+<body>
+    <img width="500" th:src="@{${'data:image/jpeg;base64, ' + qr.getbase64() }}" title="QR-image" />
+<br/>
+    <kbd><span th:text="${qr.phrase}"></span></kbd>
+<script type="text/javascript" src="webjars/jquery/2.1.4/jquery.min.js"></script>
+</body>
+</html> 

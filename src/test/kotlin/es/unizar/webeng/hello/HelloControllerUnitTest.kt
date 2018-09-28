@@ -14,6 +14,8 @@ import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.HttpStatus
 
+import java.util.Base64
+
 
 @RunWith(SpringRunner::class)
 @WebMvcTest(HelloController::class)
@@ -71,6 +73,19 @@ class HelloControllerUnitTest {
         } catch (ex: InvalidWelcomeMessageException) {
             assertThat(ex.message, `is`("Invalid request. No one can be named $personalMessage"))
         }
+    }
+
+    /*
+     * Test QR Encoding (MUST be success)
+     */
+    @Test
+    @Throws(Exception::class)
+    fun `test correct encoding`() {
+        val qr = Qr("src/main/resources/static/qr/img/1794106052.png")
+
+        controller.qr(qr, "hello world")
+        
+        assertThat(qr.hash, `is` (1794106052))
     }
 
     /**
