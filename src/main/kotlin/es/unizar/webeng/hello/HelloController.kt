@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*
 import khttp.get // Http library for kotlin
 import org.json.*
 import java.util.Random
+import kotlin.math.*
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.redis.core.StringRedisTemplate
@@ -193,17 +194,60 @@ class HelloController {
      *
      * @return returns string with result value [Heads or Trails]
      */
-    @GetMapping("/games/HeadsTrails")
+    @GetMapping("/games/headsTrails")
     fun headsTrails(@ModelAttribute msg: Message) : String {
         var random = Random()
         var value = random.nextInt(2)
         if (value == 0) {
             msg.message = "Heads"
-            return "headsTrails"
         } else {
             msg.message = "Tails"
-            return "headsTrails"
         }
+        return "gambling"
     }
+
+    /**
+     * Function that simulates gambling machine (slot machine) with 3 cylinders
+     * User only rewarded when the cylinders are equals.
+     *
+     * @param form It must have two keys: "a":balance, "b":bet.
+     * PRECONDITION: a => b
+     * @return returns string with cylinders and final balance
+     */
+    @PostMapping("/games/gamblingMachine")
+    fun gamblingMachine(@ModelAttribute msg: Message, @ModelAttribute form: Gcd) : String {
+        var balance = form.a
+        var bet = form.b
+
+        //Check if bet is greater than balance
+        if ( bet > balance) {
+            msg.message = "Bet cannot be greater then balance, max bet is: " + balance + " $";
+        } else {
+            //Populate array 1 2 3 3 4 4 4 5 5 5 5 ... 9 9 9 9 9 9 9 9 9
+            var cylinderList = Array(39, { i -> ((1) + sqrt((1 + (8 * i)).toDouble()) / 2).toInt().toString()})
+
+            //Output style f: first cylinder, s: second cylinder, t: third cylinder
+            var result = "[f] [s] [t]"
+
+            //Random generates cylinder
+            var random = Random()
+            var first = cylinderList.get(random.nextInt(cylinderList.size))
+            var second = cylinderList.get(random.nextInt(cylinderList.size))
+            var third = cylinderList.get(random.nextInt(cylinderList.size))
+            result = result.replace("f", first).replace("s", second).replace("t", third)
+
+            /* Check if cylinders are equals, and calculates final balance
+             * Only check equal cylinders. Can add more win rules.
+             */
+            if (first == second && second == third) {
+                balance = balance + (100 - first.toInt() * 10) * bet
+            } else {
+                balance = balance - bet
+            }
+            msg.message = result + " :::: balance = " + balance + " $"
+        }
+        return "gambling"
+    }
+
 
 }
