@@ -141,6 +141,39 @@ class HelloController {
     }
 
     /**
+     * Found at https://www.baeldung.com/java-generate-prime-numbers
+     * This code is separated from "findPrimes" because of the test in
+     * HelloControllerUnitTest.kt
+     * @param n all prime number from 0 to n
+     * @return a List object with all prime numbers below the parameter "n"
+     */
+    fun sieveOfEratosthenes(n: Int): List<Int> {
+    	var prime = BooleanArray(n + 1)
+    	var p: Int = 2
+	    prime.fill(true, 0, n)
+	    for (p in 2 until p*p step 1) {
+	        if (prime[p]) {
+	            for (i in 2*p until n step p) {
+	                prime[i] = false
+	            }
+	        }
+	    }
+	    val primeNumbers = (2 until n).filter { prime[it] }
+	    return primeNumbers
+    }
+
+    /**
+     * @PathVariable annotation is used to extract a variable from the url
+     * @param n all prime number from 0 to n
+     * @return all prime numbers below the parameter "n"
+     */
+	@GetMapping("/primes/{n}")
+	fun findPrimes(@ModelAttribute msg: Message, @PathVariable n: Int): String {
+	    msg.message=sieveOfEratosthenes(n).joinToString()
+	    return "welcome"
+	}
+
+    /**
      * Function returns random value between two integers
      *
      * @Param form It must have two keys: "a":value1, "b":value2

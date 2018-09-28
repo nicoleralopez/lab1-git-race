@@ -26,7 +26,7 @@ class HelloControllerUnitTest {
     private lateinit var controller: HelloController
 
     @MockBean // If not, it throws NoSuchBeanDefinitionException
-	private lateinit var stringRedisTemplate : StringRedisTemplate
+	  private lateinit var stringRedisTemplate : StringRedisTemplate
 
     /*
      * Test Generic welcome (MUST success)
@@ -85,4 +85,13 @@ class HelloControllerUnitTest {
         assertThat(result, `is`(10))
     }
 
+    @Test
+    @Throws(Exception::class)
+    fun primeTest(){
+        var testList: List<Int>
+        var targetList = mutableListOf(2, 3, 5, 7)
+        testList = controller.sieveOfEratosthenes(10).toMutableList()
+        
+        assertThat(testList.joinToString(), `is`(targetList.joinToString()))
+    }
 }
