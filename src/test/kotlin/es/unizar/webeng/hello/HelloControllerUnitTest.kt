@@ -14,8 +14,6 @@ import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.HttpStatus
 
-import java.util.Base64
-
 
 @RunWith(SpringRunner::class)
 @WebMvcTest(HelloController::class)
