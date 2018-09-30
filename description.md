@@ -93,6 +93,15 @@ The API can resolve the gcd with a POST request, i.e:
 With postman:
 ![Example for gcd](images/gcdExample.PNG?raw=true "gcd example")
 
+Now there is also a GUI to use gcd in a simple way, i.e:
+
+Go to /gcdForm (in this example the complete URL is http://localhost:8080/gcdForm) and fill the fields:
+![Form for gcd](/images/gcdForm.png?raw=true "gcd form")
+
+and click the Submit button, the result will be shown:
+![Form result for gcd](/images/gcdResult.png?raw=true "gcd form result")
+
+### References
 ## References
 [How to run a Spring Boot .war](https://spring.io/guides/gs/spring-boot/)
 [Save movies](http://michaelcgood.com/intro-redis-with-spring-boot/)

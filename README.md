@@ -11,4 +11,5 @@ User name | NIA | Travis-CI|Score
 [Ángel Cañal Muniesa](https://github.com/lAngelP) | 716205 | [![Build Status](https://travis-ci.org/lAngelP/lab1-git-race.svg)](https://travis-ci.org/lAngelP/lab1-git-race) | :gift:
 [Jorge Rambla Gonzalez](https://github.com/jorgeRambla) | 718911 | [![Build Status](https://travis-ci.org/jorgeRambla/lab1-git-race.svg)](https://travis-ci.org/jorgeRambla/lab1-git-race)
 [Alberto Mur Rodrigo](https://github.com/697589) | 697589 | [![Build Status](https://travis-ci.org/697589/lab1-git-race.svg)](https://travis-ci.org/697589/lab1-git-race)
+[Óscar Saboya Gómez](https://github.com/oscarsa) | 706430 | [![Build Status](https://travis-ci.org/oscarsa/lab1-git-race.svg)](https://travis-ci.org/oscarsa/lab1-git-race)
 your name | your nia | your Travis-ci status
