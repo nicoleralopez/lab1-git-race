@@ -1,12 +1,24 @@
-plugins {
-    id "io.spring.dependency-management" version "1.0.6.RELEASE"
-    id 'org.springframework.boot' version '2.0.5.RELEASE'
+buildscript {
+    ext.kotlin_version = '1.2.71' // Required for Kotlin integration
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version" // Required for Kotlin integration
+    	classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version" // See https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-spring-compiler-plugin
+    }
 }
 
-apply plugin: 'war'
+plugins {
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
+    id "org.springframework.boot" version "2.0.5.RELEASE"
+}
 
 apply plugin: 'eclipse-wtp'
 apply plugin: 'idea'
+
+apply plugin: 'kotlin' // Required for Kotlin integration
+apply plugin: "kotlin-spring" // See https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-spring-compiler-plugin
 
 jar {
     baseName = 'hello'
@@ -15,19 +27,32 @@ jar {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+sourceSets {
+    /* Needed because default kotlin source directory is src/main/java */
+    main.kotlin.srcDirs += 'src/main/kotlin'
+}
+
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' } // Package repository for adding Git projects
 }
 
 dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version" // Required for Kotlin integration
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+    compile "org.springframework.boot:spring-boot-starter-thymeleaf"
+
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'javax.servlet:jstl'
 
     compile 'org.webjars:bootstrap:3.3.5'
     compile 'org.webjars:jquery:2.1.4'
 
-    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-    providedRuntime 'org.apache.tomcat.embed:tomcat-embed-jasper'
+    // Persistence
+    compile 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    compile 'com.github.jkcclemens:khttp:0.1.0' // Http Repository for kotlin from github
 
     testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
