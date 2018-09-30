@@ -13,6 +13,8 @@ import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.http.ResponseEntity
 import org.springframework.http.HttpStatus
 import org.springframework.util.MultiValueMap;
+import org.springframework.ui.Model;
+
 
 
 @Controller
@@ -82,23 +84,7 @@ class HelloController {
         return "welcome"
     }
 
-    /**
-     *
-     * This annotation is used to map the personalWelcome function to a GET Request on path: "/{name}"
-     * @PathVariable annotation is used to extract a variable from the url.
-     * A name is considered valid *only* if it only contains letters (upper and lower) and spaces.
-     * @return a String saying "Hello {name}" if name is valid and an error message otherwise
-     */
-    @GetMapping("/{name}")
-    fun personalWelcome(@ModelAttribute msg: Message, @PathVariable name: String): String {
-        if (name.matches(Regex("[A-Za-z ]+"))) {
-            msg.message = "Hola $name"
-            return "welcome"
-        } else {
-            msg.message = "Invalid request. No one can be named $name"
-            throw InvalidWelcomeMessageException(msg)
-        }
-    }
+    
 
     /**
      * 
@@ -118,6 +104,8 @@ class HelloController {
         }
         return "welcome"
     }
+
+    
 
     /**
      * Function example to check the post functionality
@@ -139,6 +127,36 @@ class HelloController {
         }
         // Result is stored in a
         return a
+    }
+
+    /**
+     * Function example to use 'gcd'  with a web GUI
+     */
+    @GetMapping("/gcdForm")
+    fun gcdForm(@ModelAttribute form: GcdResult): String {
+        return "form"
+    }
+
+    /**
+     * Calculate the greatest common divisor with the form values and show the result
+     * to the user in a new webpage
+     * 
+     * @param form It must have two keys: "a":value1, "b":value2
+     * @return a String in a webpage with the 'gcd' of 'a' & 'b'
+     */
+    @PostMapping("/gcdForm")
+    fun calculateGcd(@ModelAttribute form: GcdResult, model: Model) : String{
+
+        val firstNum = form.firstNum
+        val secondNum = form.secondNum
+        //Create a new Gcd object to use 'gcd' function
+        val result = gcd(Gcd(form.firstNum!!,form.secondNum!!))
+        
+        model.addAttribute("firstNum", firstNum)
+        model.addAttribute("secondNum", secondNum)
+        model.addAttribute("result", result)
+
+        return "result"
     }
 
     /**
@@ -249,5 +267,21 @@ class HelloController {
         return "gambling"
     }
 
-
+    /**
+     *
+     * This annotation is used to map the personalWelcome function to a GET Request on path: "/{name}"
+     * @PathVariable annotation is used to extract a variable from the url.
+     * A name is considered valid *only* if it only contains letters (upper and lower) and spaces.
+     * @return a String saying "Hello {name}" if name is valid and an error message otherwise
+     */
+    @GetMapping("/{name}")
+    fun personalWelcome(@ModelAttribute msg: Message, @PathVariable name: String): String {
+        if (name.matches(Regex("[A-Za-z ]+"))) {
+            msg.message = "Hola $name"
+            return "welcome"
+        } else {
+            msg.message = "Invalid request. No one can be named $name"
+            throw InvalidWelcomeMessageException(msg)
+        }
+    }
 }
