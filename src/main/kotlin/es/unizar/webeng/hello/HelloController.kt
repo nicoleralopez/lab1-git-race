@@ -7,6 +7,14 @@ import khttp.get // Http library for kotlin
 import org.json.*
 import java.util.Random
 
+import org.slf4j.*;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.*;
+import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.http.ResponseEntity
@@ -14,15 +22,20 @@ import org.springframework.http.HttpStatus
 import org.springframework.util.MultiValueMap;
 
 // Libraries for QR Generation
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.*;
+import com.google.zxing.client.j2se.*;
+import java.util.Base64
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.awt.image.BufferedImage;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+
+import java.io.*;
+
+
 
 @Controller
 class HelloController {
@@ -130,23 +143,21 @@ class HelloController {
 
     /**
      * 
-     * This endpoint returns a QR Code with a {phrase} encoded and saves it to static/qr/img folder
+     * This endpoint returns a QR Code with a {phrase} encoded
      * @return a Qr object
      */
     @GetMapping("/qr/{phrase}")
     fun qr(@ModelAttribute qr: Qr, @PathVariable phrase: String) : String {
         
-        var hash : Int = phrase.hashCode()
-        
         val qrwriter = QRCodeWriter()
-        val BitMatrix = qrwriter.encode("$phrase", BarcodeFormat.QR_CODE, 500, 500)
 
-        val path = FileSystems.getDefault().getPath("src/main/resources/static/qr/img/$hash.png")
-        MatrixToImageWriter.writeToPath(BitMatrix, "PNG", path)
+        var oStream = ByteArrayOutputStream()
+		var  bitmatrix = MultiFormatWriter().encode("$phrase", BarcodeFormat.QR_CODE, 500, 500)
+		MatrixToImageWriter.writeToStream(bitmatrix, MediaType.IMAGE_PNG.getSubtype(), oStream, MatrixToImageConfig())
+        var base64Img = Base64.getEncoder().encodeToString(oStream.toByteArray())
 
-        qr.path = path.toString()
         qr.phrase = phrase
-        qr.hash = phrase.hashCode()
+        qr.base64 = base64Img
 
         return "qr"
     }
