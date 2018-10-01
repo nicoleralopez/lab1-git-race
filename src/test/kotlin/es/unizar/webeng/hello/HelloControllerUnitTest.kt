@@ -73,6 +73,20 @@ class HelloControllerUnitTest {
         }
     }
 
+    /*
+     * Test QR Encoding (MUST be success)
+     */
+    @Test
+    @Throws(Exception::class)
+    fun `test correct encoding`() {
+        // Hash code of the base64 format of the QR image coding "helloworld" String
+        val hash : Int = -529537629
+        val qr = Qr()
+
+        controller.qr(qr, "helloworld")
+        assertThat(qr.base64.hashCode(), `is` (hash))
+    }
+
     /**
      * Check that the POST("/gcd") method works properly when
      * the input is correct

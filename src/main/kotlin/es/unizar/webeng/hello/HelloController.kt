@@ -8,12 +8,35 @@ import org.json.*
 import java.util.Random
 import kotlin.math.*
 
+import org.slf4j.*;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.*;
+import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.http.ResponseEntity
 import org.springframework.http.HttpStatus
 import org.springframework.util.MultiValueMap;
 import org.springframework.ui.Model;
+
+
+// Libraries for QR Generation
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.*;
+import com.google.zxing.client.j2se.*;
+import java.util.Base64
+
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.awt.image.BufferedImage;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+
+import java.io.*;
 
 
 
@@ -106,6 +129,27 @@ class HelloController {
     }
 
     
+
+    /**
+     * 
+     * This endpoint returns a QR Code with a {phrase} encoded
+     * @return a Qr object
+     */
+    @GetMapping("/qr/{phrase}")
+    fun qr(@ModelAttribute qr: Qr, @PathVariable phrase: String) : String {
+        
+        val qrwriter = QRCodeWriter()
+
+        var oStream = ByteArrayOutputStream()
+		var  bitmatrix = MultiFormatWriter().encode("$phrase", BarcodeFormat.QR_CODE, 500, 500)
+		MatrixToImageWriter.writeToStream(bitmatrix, MediaType.IMAGE_PNG.getSubtype(), oStream, MatrixToImageConfig())
+        var base64Img = Base64.getEncoder().encodeToString(oStream.toByteArray())
+
+        qr.phrase = phrase
+        qr.base64 = base64Img
+
+        return "qr"
+    }
 
     /**
      * Function example to check the post functionality
