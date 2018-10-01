@@ -79,7 +79,8 @@ class HelloControllerUnitTest {
     @Test
     @Throws(Exception::class)
     fun `test correct encoding`() {
-        val hash : Int = -529537629 // Hash code of the base64 format of the QR image coding "helloworld" String
+        // Hash code of the base64 format of the QR image coding "helloworld" String
+        val hash : Int = -529537629
         val qr = Qr()
 
         controller.qr(qr, "helloworld")
