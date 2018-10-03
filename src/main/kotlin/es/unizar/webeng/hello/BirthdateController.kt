@@ -25,26 +25,31 @@ class BirthdateController {
                               res:$person dbo:birthDate ?birthDate .
                               res:$person rdf:type dbo:Person
                           }
-                        """, "UTF-8")
-      val response = get("http://dbpedia.org/sparql?default-graph-uri=&query=$sparqlQuery&format=json")
-      var statusCode = response.statusCode
-      if( statusCode == 200) {
-        try {
-          val birthDate = (((((response.jsonObject.get("results") as JSONObject)
-                          .get("bindings") as JSONArray).get(0) as JSONObject)
-                          .get("birthDate") as JSONObject).get("value").toString())
+                        """, "UTF-8").trimIndent()
+      try {
+        val response = get("http://dbpedia.org/sparql?default-graph-uri=&query=$sparqlQuery&format=json")
+        var statusCode = response.statusCode
+        if( statusCode == 200) {
+          var birthDate = ""
+          try {
+            birthDate = (response.jsonObject.getJSONObject("results")
+                            .getJSONArray("bindings").getJSONObject(0)
+                            .getJSONObject("birthDate").getString("value"))
+          }
+          catch(e:JSONException) {
+            // Either the given person does not exist in dbpedia or the birthday
+            // of the person is not stored in dbpedia, we have a JSONException
+            throw JSONKeyNotFoundException("The JSON has not the birthDate key in the correct position")
+          }
           return Birthdate(birthDate)
         }
-        catch(e:JSONException) {
-          // Either the given person does not exist in dbpedia or the birthday
-          // of the person is not stored in dbpedia, we have a JSONException
-          msg.message = "Error 404 NOT FOUND"
-          throw URINotFoundException(msg)
+        else {
+            throw BadStatusCodeException("The received status code ($statusCode) is not correct")
         }
       }
-      else {
-          msg.message = "Error $statusCode dbpedia not working!"
-          throw URINotFoundException(msg)
+      catch(e:Exception) {
+        msg.message = "Error 404 NOT FOUND"
+        throw URINotFoundException(msg)
       }
   }
 }
