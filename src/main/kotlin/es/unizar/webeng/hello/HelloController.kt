@@ -58,7 +58,7 @@ class HelloController {
     @ResponseBody
     fun findAll() : Map<String, String> {
         var map = HashMap<String, String>();
-        var keys = sharedData.keys("[^d]*");// you can use any specific pattern of key
+        var keys = sharedData.keys("*");// you can use any specific pattern of key
         // return sharedData.opsForValue().multiGet(keys);
         for(key in keys){
             var value = sharedData.opsForValue().get(key);
@@ -79,10 +79,7 @@ class HelloController {
     fun add(@RequestParam movie: MultiValueMap<String, String>) : ResponseEntity<String> {
         var key = movie.getFirst("key")!!
         var value = movie.getFirst("value")!!
-        var description = movie.getFirst("description")!!
         sharedData.opsForValue().set(key, value);
-        val dkey = "d$key"
-        sharedData.opsForValue().set(dkey, description);
         return ResponseEntity<String>(HttpStatus.OK);
     }
 
@@ -96,27 +93,7 @@ class HelloController {
     @PostMapping("/delete")
     fun delete(@RequestParam key: String) : ResponseEntity<String>{
         sharedData.delete(key);
-        val dkey = "d$key"
-        sharedData.delete(dkey);
         return ResponseEntity<String>(HttpStatus.OK);
-    }
-
-    /**
-     * See a movie
-     *
-     * @param key The key of the movie
-     *
-     * @return Ok if everything goes ok
-     */
-     @GetMapping("/see")
-     @ResponseBody
-     fun see(@RequestParam key: String) : Map<String, String> {
-        var map = HashMap<String, String>();
-        var value = sharedData.opsForValue().get(key);
-        var dkey = "d$key"
-        var descrip = sharedData.opsForValue().get(dkey);
-        map.put(value,descrip);
-        return map;
     }
 
     /**

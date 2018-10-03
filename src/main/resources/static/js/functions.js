@@ -42,17 +42,6 @@ function deleteButton(key) {
 }
 
 /**
- * See information key: Load information
- */
-function seeButton(key) {
-    var format = '<button '
-        + 'class="btn btn-default" '
-        + 'onclick="seeKey(\'{key}\')" '
-        + '>See</button>';
-    return format.replace(/{key}/g, key);
-}
-
-/**
  * Create HTML table row element.
  *
  * \param key (str) text into the key cell.
@@ -64,27 +53,7 @@ function row(key, value) {
             td(key) +
             td(value) +
             td(editButton(key)) +
-            td(deleteButton(key)) +
-            td(seeButton(key))));
-}
-
-/**
- * Create HTML table row element.
- *
- * \param key (str) text into the key cell.
- * \param value (str) text into the value cell.
- * \param description (str) text into the value cell.
- */
-function rowd(key, value, description) {
-    return $(
-        tr(
-            tr(td("KEY")+td("VALUE")+td("DESCRIPTION"))+
-            td(key) +
-            td(value) +
-            td(description)
-        )
-
-    );
+            td(deleteButton(key))));
 }
 
 /**
@@ -103,45 +72,23 @@ function refreshTable() {
     });
 }
 
-/**
- * Edit Movie
- *
- * \param key (str). The key to be deleted.
- */
-
 function editKey(key) {
     /* Find the row with key in first column (key column). */
     var format = '#mainTable tbody td:first-child:contains("{key}")',
         selector = format.replace(/{key}/, key),
         cells = $(selector).parent().children(),
-        key = cells[0].textContent
+        key = cells[0].textContent,
+        value = cells[1].textContent,
+        keyInput = $('#keyInput'),
+        valueInput = $('#valueInput');
 
-    /*Find information key (value,description)*/
-    $.get('/see',{key:key}, function(data) {
-        var attr
-        for (attr in data) {
-            if (data.hasOwnProperty(attr)) {
-              value = attr;
-              description = data[attr];
-              keyInput = $('#keyInput'),
-              valueInput = $('#valueInput'),
-              descrip = $('#descrip');
-
-              /* Load the key and value texts into inputs
-               * Select value text so it can be directly typed to
-               */
-              keyInput.val(key);
-              valueInput.val(value);
-              descrip.val(description);
-              valueInput.select();
-            }
-        }
-
-    });
-
-
+    /* Load the key and value texts into inputs
+     * Select value text so it can be directly typed to
+     */
+    keyInput.val(key);
+    valueInput.val(value);
+    valueInput.select();
 }
-
 
 /**
  * Delete key-value pair.
@@ -160,55 +107,31 @@ function deleteKey(key) {
     });
 }
 
-/**
- * See information of key-value pair.
- *
- * \param key (str) The key to be which you want see the information.
- */
-function seeKey(key) {
-
-  $.get('/see',{key:key}, function(data) {
-      var attr,
-          infoTable = $('#infoTable tbody');
-      infoTable.empty();
-      for (attr in data) {
-          if (data.hasOwnProperty(attr)) {
-              infoTable.append(rowd(key,attr, data[attr]));
-          }
-      }
-  });
-
-}
-
 $(document).ready(function() {
-  var keyInput = $('#keyInput'),
-      valueInput = $('#valueInput'),
-      descrip = $('#descrip');
+    var keyInput = $('#keyInput'),
+        valueInput = $('#valueInput');
 
-  refreshTable();
-  $('#addForm').on('submit', function(event) {
-      var data = {
-          "key": keyInput.val(),
-          "value": valueInput.val(),
-          "description": descrip.val()
-      };
+    refreshTable();
+    $('#addForm').on('submit', function(event) {
+        var data = {
+            "key": keyInput.val(),
+            "value": valueInput.val()
+        };
 
-      /*
-       * Persist the new key-value pair.
-       * Clear the inputs.
-       * Set keyboard focus to key input: ready to start typing.
-       */
-      $.post('/add', data, function() {
-          refreshTable();
-          keyInput.val('');
-          valueInput.val('');
-          descrip.val('');
-
-          keyInput.focus();
-      });
-      /* Prevent HTTP form submit */
-      event.preventDefault();
-  });
+        /*
+         * Persist the new key-value pair.
+         * Clear the inputs.
+         * Set keyboard focus to key input: ready to start typing.
+         */
+        $.post('/add', data, function() {
+            refreshTable();
+            keyInput.val('');
+            valueInput.val('');
+            keyInput.focus();
+        });
+        /* Prevent HTTP form submit */
+        event.preventDefault();
+    });
 
     /* Focus keyboard input into key input; ready to start typing */
     keyInput.focus();
