@@ -13,4 +13,5 @@ User name | NIA | Travis-CI|Score
 [Alberto Mur Rodrigo](https://github.com/697589) | 697589 | [![Build Status](https://travis-ci.org/697589/lab1-git-race.svg)](https://travis-ci.org/697589/lab1-git-race)
 [Óscar Saboya Gómez](https://github.com/oscarsa) | 706430 | [![Build Status](https://travis-ci.org/oscarsa/lab1-git-race.svg)](https://travis-ci.org/oscarsa/lab1-git-race)
 [David Sáez García](https://github.com/davidigea) | 704130 | [![Build Status](https://travis-ci.org/davidigea/lab1-git-race.svg)](https://travis-ci.org/davidigea/lab1-git-race)
+[María Lázaro Muñío](https://github.com/mariaarino93) | 652326 |  [![Build Status] (https://travis-ci.com/mariaarino93/lab1-git-race.svg)]
 your name | your nia | your Travis-ci status
