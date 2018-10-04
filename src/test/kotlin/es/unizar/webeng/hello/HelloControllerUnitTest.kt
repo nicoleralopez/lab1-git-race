@@ -26,7 +26,7 @@ class HelloControllerUnitTest {
     private lateinit var controller: HelloController
 
     @MockBean // If not, it throws NoSuchBeanDefinitionException
-	private lateinit var stringRedisTemplate : StringRedisTemplate
+	  private lateinit var stringRedisTemplate : StringRedisTemplate
 
     /*
      * Test Generic welcome (MUST success)
@@ -73,6 +73,20 @@ class HelloControllerUnitTest {
         }
     }
 
+    /*
+     * Test QR Encoding (MUST be success)
+     */
+    @Test
+    @Throws(Exception::class)
+    fun `test correct encoding`() {
+        // Hash code of the base64 format of the QR image coding "helloworld" String
+        val hash : Int = -529537629
+        val qr = Qr()
+
+        controller.qr(qr, "helloworld")
+        assertThat(qr.base64.hashCode(), `is` (hash))
+    }
+
     /**
      * Check that the POST("/gcd") method works properly when
      * the input is correct
@@ -85,4 +99,13 @@ class HelloControllerUnitTest {
         assertThat(result, `is`(10))
     }
 
+    @Test
+    @Throws(Exception::class)
+    fun primeTest(){
+        var testList: List<Int>
+        var targetList = mutableListOf(2, 3, 5, 7)
+        testList = controller.sieveOfEratosthenes(10).toMutableList()
+        
+        assertThat(testList.joinToString(), `is`(targetList.joinToString()))
+    }
 }
