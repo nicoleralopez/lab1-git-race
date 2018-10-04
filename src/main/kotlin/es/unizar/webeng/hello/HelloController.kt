@@ -137,12 +137,12 @@ class HelloController {
      */
     @GetMapping("/qr/{phrase}")
     fun qr(@ModelAttribute qr: Qr, @PathVariable phrase: String) : String {
-        
+
         val qrwriter = QRCodeWriter()
 
         var oStream = ByteArrayOutputStream()
-		var  bitmatrix = MultiFormatWriter().encode("$phrase", BarcodeFormat.QR_CODE, 500, 500)
-		MatrixToImageWriter.writeToStream(bitmatrix, MediaType.IMAGE_PNG.getSubtype(), oStream, MatrixToImageConfig())
+        var  bitmatrix = MultiFormatWriter().encode("$phrase", BarcodeFormat.QR_CODE, 500, 500)
+        MatrixToImageWriter.writeToStream(bitmatrix, MediaType.IMAGE_PNG.getSubtype(), oStream, MatrixToImageConfig())
         var base64Img = Base64.getEncoder().encodeToString(oStream.toByteArray())
 
         qr.phrase = phrase
@@ -236,6 +236,29 @@ class HelloController {
 	    return "welcome"
 	}
 
+    /**
+     * @PathVariable annotation is used to extract a variable from the url
+     *  @param t type of shape: triangle,rectangle,rhombus
+     *  @return the area of the shape
+     */
+    @GetMapping("/areacalculator/{t}/{p1}/{p2}")
+    fun findPrimes(@ModelAttribute msg: Message,@PathVariable t: String,@PathVariable p1: Int,@PathVariable p2: Int): String {
+        msg.message="hello world!"
+        var a=0
+        if(t=="triangle"){
+            a=p1*p2/2
+            msg.message="triangle area: $a"
+        }
+        if(t=="rectangle"){
+            a=p1*p2
+            msg.message="rectangle area: $a"
+        }
+        if(t=="rhombus"){
+            a=p1*p2/2
+            msg.message="rhombus area: $a"
+        }
+        return "welcome"
+    }
     /**
      * Function returns random value between two integers
      *
