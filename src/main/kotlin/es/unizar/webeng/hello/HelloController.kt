@@ -37,7 +37,7 @@ import java.awt.image.BufferedImage;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 
 import java.io.*;
-
+import java.net.URI
 
 
 @Controller
@@ -201,6 +201,54 @@ class HelloController {
         model.addAttribute("result", result)
 
         return "result"
+    }
+
+    /**
+     * "isitdown" form webpage
+     */
+    @GetMapping("/isitdown")
+    fun isItDown(@ModelAttribute msg: Message): String {
+        return "isitdown"
+    }
+
+    /**
+     * Check if the website provided by the user is available and
+     * show the response to the user in a new webpage
+     *
+     * @param form It must have one key: "website":a website's URI
+     * @return a String in a webpage saying whether the website was found available or not
+     */
+    @PostMapping("/isitdown")
+    fun checkWebsite(@ModelAttribute form: Website, model: Model) : String{
+        if(form.website == null || form.website.equals("")){
+            return "isitdown"
+        }
+
+        var uriStr = form.website
+
+        if(! (uriStr.startsWith("http://") || uriStr.startsWith("https://")) ){
+            uriStr = "http://"+uriStr
+        }
+
+        var uri = URI(uriStr)
+        var host = uri.getHost()
+        var status = host + " looks "
+
+        try {
+            val statusCode = get("http://" + host).statusCode
+
+            if (statusCode == 200) {
+                status = status + "up from here"
+            } else {
+                status = status + "down from here"
+            }
+        } catch (e : java.net.UnknownHostException){
+            status = status + "nonexistent from here"
+        }
+
+        model.addAttribute("status", status)
+
+        return "isitdown"
     }
 
     /**
