@@ -50,7 +50,7 @@ class HelloController {
 
 
     /**
-     * 
+     *
      * This endpoint return all the movies in the database
      * @return a Map<String,String> with all the movies in the database
      */
@@ -64,7 +64,7 @@ class HelloController {
             var value = sharedData.opsForValue().get(key);
             if (value != null) map.put(key, value)
         }
-        return map 
+        return map
     }
 
     /**
@@ -94,7 +94,7 @@ class HelloController {
     fun delete(@RequestParam key: String) : ResponseEntity<String>{
         sharedData.delete(key);
         return ResponseEntity<String>(HttpStatus.OK);
-    } 
+    }
 
     /**
      *
@@ -107,10 +107,9 @@ class HelloController {
         return "welcome"
     }
 
-    
 
     /**
-     * 
+     *
      * This endpoint returns a random Chuck Norris joke if the api is available and error 404 (NOT FOUND)
      * if it's not
      * @return a String with a funny joke
@@ -128,16 +127,15 @@ class HelloController {
         return "welcome"
     }
 
-    
+
 
     /**
-     * 
+     *
      * This endpoint returns a QR Code with a {phrase} encoded
      * @return a Qr object
      */
     @GetMapping("/qr/{phrase}")
     fun qr(@ModelAttribute qr: Qr, @PathVariable phrase: String) : String {
-        
         val qrwriter = QRCodeWriter()
 
         var oStream = ByteArrayOutputStream()
@@ -184,7 +182,7 @@ class HelloController {
     /**
      * Calculate the greatest common divisor with the form values and show the result
      * to the user in a new webpage
-     * 
+     *
      * @param form It must have two keys: "a":value1, "b":value2
      * @return a String in a webpage with the 'gcd' of 'a' & 'b'
      */
@@ -195,7 +193,6 @@ class HelloController {
         val secondNum = form.secondNum
         //Create a new Gcd object to use 'gcd' function
         val result = gcd(Gcd(form.firstNum!!,form.secondNum!!))
-        
         model.addAttribute("firstNum", firstNum)
         model.addAttribute("secondNum", secondNum)
         model.addAttribute("result", result)
