@@ -15,4 +15,5 @@ User name | NIA | Travis-CI|Score
 [David Sáez García](https://github.com/davidigea) | 704130 | [![Build Status](https://travis-ci.org/davidigea/lab1-git-race.svg)](https://travis-ci.org/davidigea/lab1-git-race)
 [Gonzalo Torrecillas Pérez](https://github.com/gonzalotp) | 718556 | [![Build Status](https://travis-ci.org/gonzalotp/lab1-git-race.svg)](https://travis-ci.org/gonzalotp/lab1-git-race)
 [Roberto C. C. U.](https://github.com/robertoccu/) | 720100 | [![Build Status](https://travis-ci.org/robertoccu/lab1-git-race.svg)](https://travis-ci.org/robertoccu/lab1-git-race)
+[David Mañas Vidorreta](https://github.com/davidmavi16) | 614590 | [![Build Status](https://travis-ci.org/davidmavi16/lab1-git-race.svg)](https://travis-ci.org/davidmavi16/lab1-git-race)
 your name | your nia | your Travis-ci status
