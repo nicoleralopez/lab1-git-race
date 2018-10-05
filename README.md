@@ -14,6 +14,7 @@ User name | NIA | Travis-CI|Score
 [Óscar Saboya Gómez](https://github.com/oscarsa) | 706430 | [![Build Status](https://travis-ci.org/oscarsa/lab1-git-race.svg)](https://travis-ci.org/oscarsa/lab1-git-race)
 [Rosario Lissandrello](https://github.com/rslissa) | 782996| [![Build Status](https://travis-ci.org/rslissa/lab1-git-race.svg)](https://travis-ci.org/rslissa/lab1-git-race)
 [David Sáez García](https://github.com/davidigea) | 704130 | [![Build Status](https://travis-ci.org/davidigea/lab1-git-race.svg)](https://travis-ci.org/davidigea/lab1-git-race)
+[María Lázaro Muñío](https://github.com/mariaarino93) | 652326 |  [![Build Status](https://travis-ci.org/mariaarino93/lab1-git-race.svg)](https://travis-ci.org/mariaarino93/lab1-git-race)
 [Gonzalo Torrecillas Pérez](https://github.com/gonzalotp) | 718556 | [![Build Status](https://travis-ci.org/gonzalotp/lab1-git-race.svg)](https://travis-ci.org/gonzalotp/lab1-git-race)
 [Roberto C. C. U.](https://github.com/robertoccu/) | 720100 | [![Build Status](https://travis-ci.org/robertoccu/lab1-git-race.svg)](https://travis-ci.org/robertoccu/lab1-git-race)
 [David Mañas Vidorreta](https://github.com/davidmavi16) | 614590 | [![Build Status](https://travis-ci.org/davidmavi16/lab1-git-race.svg)](https://travis-ci.org/davidmavi16/lab1-git-race)
