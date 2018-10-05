@@ -513,4 +513,41 @@ class HelloController {
         return "dniResult"
     }
 
+    /**
+     * Function that cheks de post functionality again
+     *
+     * @param form It must have two keys: "cada":value1, "cadb":value2
+     *
+     * @result returns the porcentage of cada that is similar to cadb
+     */
+     
+    @PostMapping("/cmp/cmp")
+    @ResponseBody
+    fun cmp(@ModelAttribute form: Cmp): Double {
+        var cada = form.cada
+        var cadb = form.cadb
+
+        var hits: Double = 0.0
+        var letters: Double = 0.0
+        var longi: Int
+        if ( cada.length > cadb.length ){
+            longi = cadb.length
+        }
+        else{
+            longi = cada.length
+        }
+        var p: Int = 0
+        while ( p < longi ) {
+            if( cada.get( p ) == cadb.get( p ) ) {
+                hits = hits + 1.0
+            }
+            letters = letters + 1.0
+            p = p + 1
+        }
+        if( letters < cada.length ){
+            letters = cada.length * 1.0
+        }
+        return ( hits / letters )
+    }
+
 }
