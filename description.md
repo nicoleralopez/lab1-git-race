@@ -12,7 +12,7 @@ $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/inst
 
 ## Getting Started
 
-### How to build de code
+### How to build the code
 Do the following steps to just build the project.
 ```
 $ cd lab1-git-race

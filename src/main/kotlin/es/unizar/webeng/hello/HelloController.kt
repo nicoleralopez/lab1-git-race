@@ -108,7 +108,6 @@ class HelloController {
     }
 
 
-
     /**
      *
      * This endpoint returns a random Chuck Norris joke if the api is available and error 404 (NOT FOUND)
@@ -137,7 +136,6 @@ class HelloController {
      */
     @GetMapping("/qr/{phrase}")
     fun qr(@ModelAttribute qr: Qr, @PathVariable phrase: String) : String {
-
         val qrwriter = QRCodeWriter()
 
         var oStream = ByteArrayOutputStream()
@@ -195,7 +193,6 @@ class HelloController {
         val secondNum = form.secondNum
         //Create a new Gcd object to use 'gcd' function
         val result = gcd(Gcd(form.firstNum!!,form.secondNum!!))
-
         model.addAttribute("firstNum", firstNum)
         model.addAttribute("secondNum", secondNum)
         model.addAttribute("result", result)

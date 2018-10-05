@@ -47,7 +47,7 @@ dependencies {
     compile 'javax.servlet:jstl'
 
     compile 'org.webjars:bootstrap:3.3.5'
-    compile 'org.webjars:jquery:2.1.4'
+    compile 'org.webjars:jquery:3.1.0'
 
     compile "com.google.zxing:core:3.3.0" // Required for QR generation
     compile 'com.google.zxing:javase:3.3.0'
@@ -56,6 +56,12 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-data-redis'
 
     compile 'com.github.jkcclemens:khttp:0.1.0' // Http Repository for kotlin from github
+
+    // Web Sockets
+    compile("org.springframework.boot:spring-boot-starter-websocket")
+    compile("org.webjars:webjars-locator-core")
+    compile("org.webjars:sockjs-client:1.0.2")
+    compile("org.webjars:stomp-websocket:2.3.3")
 
     testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
