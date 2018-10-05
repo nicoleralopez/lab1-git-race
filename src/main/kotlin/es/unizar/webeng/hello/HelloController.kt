@@ -131,7 +131,6 @@ class HelloController {
     }
 
 
-
     /**
      *
      * This endpoint returns a random Chuck Norris joke if the api is available and error 404 (NOT FOUND)
@@ -160,12 +159,11 @@ class HelloController {
      */
     @GetMapping("/qr/{phrase}")
     fun qr(@ModelAttribute qr: Qr, @PathVariable phrase: String) : String {
-
         val qrwriter = QRCodeWriter()
 
         var oStream = ByteArrayOutputStream()
-		var  bitmatrix = MultiFormatWriter().encode("$phrase", BarcodeFormat.QR_CODE, 500, 500)
-		MatrixToImageWriter.writeToStream(bitmatrix, MediaType.IMAGE_PNG.getSubtype(), oStream, MatrixToImageConfig())
+        var  bitmatrix = MultiFormatWriter().encode("$phrase", BarcodeFormat.QR_CODE, 500, 500)
+        MatrixToImageWriter.writeToStream(bitmatrix, MediaType.IMAGE_PNG.getSubtype(), oStream, MatrixToImageConfig())
         var base64Img = Base64.getEncoder().encodeToString(oStream.toByteArray())
 
         qr.phrase = phrase
@@ -218,7 +216,6 @@ class HelloController {
         val secondNum = form.secondNum
         //Create a new Gcd object to use 'gcd' function
         val result = gcd(Gcd(form.firstNum!!,form.secondNum!!))
-
         model.addAttribute("firstNum", firstNum)
         model.addAttribute("secondNum", secondNum)
         model.addAttribute("result", result)
@@ -307,6 +304,29 @@ class HelloController {
 	    return "welcome"
 	}
 
+    /**
+     * @PathVariable annotation is used to extract a variable from the url
+     *  @param t type of shape: triangle,rectangle,rhombus
+     *  @return the area of the shape
+     */
+    @GetMapping("/areacalculator/{t}/{p1}/{p2}")
+    fun findPrimes(@ModelAttribute msg: Message,@PathVariable t: String,@PathVariable p1: Int,@PathVariable p2: Int): String {
+        msg.message="hello world!"
+        var a=0
+        if(t=="triangle"){
+            a=p1*p2/2
+            msg.message="triangle area: $a"
+        }
+        if(t=="rectangle"){
+            a=p1*p2
+            msg.message="rectangle area: $a"
+        }
+        if(t=="rhombus"){
+            a=p1*p2/2
+            msg.message="rhombus area: $a"
+        }
+        return "welcome"
+    }
     /**
      * Function returns random value between two integers
      *
@@ -399,4 +419,98 @@ class HelloController {
             throw InvalidWelcomeMessageException(msg)
         }
     }
+
+    /**
+     * Checks if the DNI letter is correct based its number
+     *
+     * @param form It must have two keys: "number":value1, "letter":value2
+     * @return true if the letter is correct. Otherwise, false
+     */
+    @PostMapping("/checkLetter")
+    @ResponseBody
+    fun checkLetter(@ModelAttribute form: Dni): Boolean {
+        var number = form.number.toInt()
+        var letter = form.letter
+        var letters = arrayOf("T", "R", "W", "A", "G", "M", "Y", "F", "P", "D", "X", "B", "N", "J", "Z", "S", "Q", "V", "H", "L", "C", "K", "E")
+
+        return letters[number%23] == letter
+    }
+
+    /**
+     * Checks if the DNI number has only digits
+     *
+     * @param form It must have two keys: "number":value1, "letter":value2
+     * @return true if all the characters are digits. Otherwise, false
+     */
+    @PostMapping("/onlyNumbers")
+    @ResponseBody
+    fun onlyNumbers(@ModelAttribute form: Dni): Boolean {
+        var number = form.number
+
+        for (i in 0 until number.length){
+            if(!number.get(i).isDigit()){
+                return false
+            }
+        }
+
+        return true
+    }
+
+    /**
+     * Checks if the provided DNI is a valid one.
+     *
+     * @param form It must have two keys: "number":value1, "letter":value2
+     * @return "valid" if the DNI is correct. Otherwise, "invalid".
+     */
+    @PostMapping("/dni")
+    @ResponseBody
+    fun dni(@ModelAttribute form: Dni): String {
+        var number = form.number
+        var letter = form.letter.single()
+        var result = "invalid"
+
+        if(letter.isLetter()){
+            letter.toUpperCase()
+            if(number.length == 8){
+                if(onlyNumbers(Dni(form.number,form.letter))){
+                    if(checkLetter(Dni(form.number,form.letter))){
+                        result = "valid"
+                    }
+                }
+            }
+        }
+
+        return result
+    }
+
+    /**
+     * Function example to use 'dni' with a web GUI
+     */
+    @GetMapping("/dniForm")
+    fun DniForm(@ModelAttribute form: DniResult): String {
+        return "dniForm"
+    }
+
+    /**
+     * Checks if the DNI introduced, numbers and letters,
+     * represents a valid document or not
+     *
+     * @param form It must have two keys: "number":value1, "letter":value2
+     * @return a String in a webpage that indicates if the DNI is valid
+     */
+    @PostMapping("/dniForm")
+    fun testDni(@ModelAttribute form: DniResult, model: Model) : String{
+
+        val number = form.Number
+        val letter = form.Letter
+        //Create a new Dni object to use 'dni' function
+        val result = dni(Dni(form.Number!!,form.Letter!!))
+
+        model.addAttribute("number", number)
+        model.addAttribute("letter", letter)
+        model.addAttribute("result", result)
+
+        return "dniResult"
+    }
+
 }
