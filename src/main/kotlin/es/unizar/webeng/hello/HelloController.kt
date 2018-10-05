@@ -529,6 +529,7 @@ class HelloController {
 
         var hits: Double = 0.0
         var letters: Double = 0.0
+        
         var longi: Int
         if ( cada.length > cadb.length ){
             longi = cadb.length
