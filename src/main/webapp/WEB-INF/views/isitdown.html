@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body class="container">
+<span th:text="${status}"></span>
+<form action="isitdown" method="post">
+    <h1>Is this website down or is it just me?</h1>
+    <input id="website" type="text" name="website" placeholder="www.example.com" autocomplete="off" required />
+    <input type="submit" value="Submit" />
+</form>
+</body>
+</html>
