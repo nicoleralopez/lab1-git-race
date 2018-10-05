@@ -376,4 +376,98 @@ class HelloController {
             throw InvalidWelcomeMessageException(msg)
         }
     }
+
+    /**
+     * Checks if the DNI letter is correct based its number
+     *
+     * @param form It must have two keys: "number":value1, "letter":value2
+     * @return true if the letter is correct. Otherwise, false
+     */
+    @PostMapping("/checkLetter")
+    @ResponseBody
+    fun checkLetter(@ModelAttribute form: Dni): Boolean {
+        var number = form.number.toInt()
+        var letter = form.letter
+        var letters = arrayOf("T", "R", "W", "A", "G", "M", "Y", "F", "P", "D", "X", "B", "N", "J", "Z", "S", "Q", "V", "H", "L", "C", "K", "E")
+
+        return letters[number%23] == letter
+    }
+
+    /**
+     * Checks if the DNI number has only digits
+     *
+     * @param form It must have two keys: "number":value1, "letter":value2
+     * @return true if all the characters are digits. Otherwise, false
+     */
+    @PostMapping("/onlyNumbers")
+    @ResponseBody
+    fun onlyNumbers(@ModelAttribute form: Dni): Boolean {
+        var number = form.number
+
+        for (i in 0 until number.length){
+            if(!number.get(i).isDigit()){
+                return false
+            }
+        }
+
+        return true
+    }
+
+    /**
+     * Checks if the provided DNI is a valid one.
+     *
+     * @param form It must have two keys: "number":value1, "letter":value2
+     * @return "valid" if the DNI is correct. Otherwise, "invalid".
+     */
+    @PostMapping("/dni")
+    @ResponseBody
+    fun dni(@ModelAttribute form: Dni): String {
+        var number = form.number
+        var letter = form.letter.single()
+        var result = "invalid"
+
+        if(letter.isLetter()){
+            letter.toUpperCase()
+            if(number.length == 8){
+                if(onlyNumbers(Dni(form.number,form.letter))){
+                    if(checkLetter(Dni(form.number,form.letter))){
+                        result = "valid"
+                    }
+                }
+            }
+        }
+
+        return result
+    }
+
+    /**
+     * Function example to use 'dni' with a web GUI
+     */
+    @GetMapping("/dniForm")
+    fun DniForm(@ModelAttribute form: DniResult): String {
+        return "dniForm"
+    }
+
+    /**
+     * Checks if the DNI introduced, numbers and letters,
+     * represents a valid document or not
+     *
+     * @param form It must have two keys: "number":value1, "letter":value2
+     * @return a String in a webpage that indicates if the DNI is valid
+     */
+    @PostMapping("/dniForm")
+    fun testDni(@ModelAttribute form: DniResult, model: Model) : String{
+
+        val number = form.Number
+        val letter = form.Letter
+        //Create a new Dni object to use 'dni' function
+        val result = dni(Dni(form.Number!!,form.Letter!!))
+
+        model.addAttribute("number", number)
+        model.addAttribute("letter", letter)
+        model.addAttribute("result", result)
+
+        return "dniResult"
+    }
+
 }

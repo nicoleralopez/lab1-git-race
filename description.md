@@ -101,8 +101,13 @@ Go to /gcdForm (in this example the complete URL is http://localhost:8080/gcdFor
 and click the Submit button, the result will be shown:
 ![Form result for gcd](/images/gcdResult.png?raw=true "gcd form result")
 
+Go to /dniForm (in this example the complete URL is http://localhost:8080/dniForm) and fill the fields:
+![Form for dni](/images/dniForm.png?raw=true "dni form")
+
+and click the Submit button, the result will be shown:
+![Form result for dni](/images/dniResult.png?raw=true "dni form result")
+
 ### References
 ## References
 [How to run a Spring Boot .war](https://spring.io/guides/gs/spring-boot/)
 [Save movies](http://michaelcgood.com/intro-redis-with-spring-boot/)
-
